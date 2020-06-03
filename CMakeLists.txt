@@ -8,7 +8,8 @@ include_directories(include)
 add_executable(PartA
         PartA/Auxiliaries.cpp
         PartA/Auxiliaries.h
-        PartA/test_partA.cpp)
+        PartA/test_partA.cpp
+        PartA/IntMatrix.cpp)
 
 # Adds compile flags to compilation command of the target hello.
 # first arg: name of the target
