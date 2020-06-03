@@ -40,8 +40,8 @@ namespace mtm {
 
     };
 
-    IntMatrix operator+(IntMatrix, int);
-    IntMatrix operator+(int, IntMatrix);
+    IntMatrix operator+(const IntMatrix, int);
+    IntMatrix operator+(int, const IntMatrix);
     bool all(const IntMatrix);
     bool any(const IntMatrix);
 
