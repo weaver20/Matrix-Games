@@ -11,16 +11,19 @@ namespace mtm {
     class IntMatrix {
         Dimensions dimensions;
         int *matrix;
-
         void initialize(int initial_value);
-
     public:
-        IntMatrix(const Dimensions &dims) : dimensions(dims) {
-            matrix = new [dims.getCol() * dims.getRow()];
-            this->initialize(0);
-        }
-
+        IntMatrix(const Dimensions &dims);
         IntMatrix(const Dimensions &dims, int initial_value);
+        IntMatrix(const IntMatrix&);
+        IntMatrix& operator=(const IntMatrix&);
+        ~IntMatrix();
+
+        IntMatrix& Identity(unsigned int dimension);
+        int height();
+        int width();
+        int size();
+        IntMatrix& transpose();
     };
 
 }
