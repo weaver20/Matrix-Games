@@ -1,6 +1,3 @@
-//
-// Created by avira on 03/06/2020.
-//
 
 #ifndef EX3_INTMATRIX_H
 #define EX3_INTMATRIX_H
@@ -11,20 +8,30 @@ namespace mtm {
     class IntMatrix {
         Dimensions dimensions;
         int *matrix;
-        void initialize(int initial_value);
+
     public:
-        IntMatrix(const Dimensions &dims);
-        IntMatrix(const Dimensions &dims, int initial_value);
+
+        IntMatrix(const Dimensions&, int = 0);
         IntMatrix(const IntMatrix&);
         IntMatrix& operator=(const IntMatrix&);
         ~IntMatrix();
 
-        IntMatrix& Identity(unsigned int dimension);
+        IntMatrix& Identity(unsigned int);
         int height();
         int width();
         int size();
         IntMatrix& transpose();
+        IntMatrix operator+(const IntMatrix) const;
+        IntMatrix operator-() const;
+        IntMatrix operator-(const IntMatrix) const;
+        IntMatrix& operator+=(int);
+        friend std::ostream& operator<<(std::ostream& os, const IntMatrix&);
+        int& operator()(int, int);
+        const int& operator()(int, int) const;
     };
+
+    IntMatrix operator+(IntMatrix, int);
+    IntMatrix operator+(int, IntMatrix);
 
 }
 
