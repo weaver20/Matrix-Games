@@ -5,22 +5,26 @@
 #ifndef EX3_INTMATRIX_H
 #define EX3_INTMATRIX_H
 #include "Auxiliaries.h"
-using mtm::Dimensions;
 
-class IntMatrix {
-    Dimensions dimensions;
-    int* matrix;
-    void initialize(int initial_value);
+namespace mtm {
 
-public:
-    IntMatrix(const Dimensions& dims) : dimensions(dims) {
-        matrix = new[dims.getCol()*dims.getRow()];
-        this->initialize(0);
+    class IntMatrix {
+        Dimensions dimensions;
+        int *matrix;
+
+        void initialize(int initial_value);
+
+    public:
+        IntMatrix(const Dimensions &dims) : dimensions(dims) {
+            matrix = new [dims.getCol() * dims.getRow()];
+            this->initialize(0);
         }
-    }
-    IntMatrix(const Dimensions& dims, int initial_value);
 
-};
+        IntMatrix(const Dimensions &dims, int initial_value);
+    };
+
+}
+
 
 
 #endif //EX3_INTMATRIX_H
