@@ -14,9 +14,10 @@ namespace mtm {
         IntMatrix(const Dimensions&, int = 0);
         IntMatrix(const IntMatrix&);
         IntMatrix& operator=(const IntMatrix&);
-        class Iterator;
-        Iterator begin() const;
-        Iterator end() const;
+        class iterator;
+        class const_iterator;
+        iterator begin() const;
+        iterator end() const;
         ~IntMatrix();
 
         IntMatrix& Identity(unsigned int);
@@ -45,20 +46,35 @@ namespace mtm {
     bool all(const IntMatrix);
     bool any(const IntMatrix);
 
-    class IntMatrix::Iterator{
+    class IntMatrix::iterator{
         Dimensions index;
         const IntMatrix* mat;
-        Iterator(const IntMatrix* mat, Dimensions dim);
+        iterator(const IntMatrix* mat, Dimensions dim);
+        friend class IntMatrix;
+
+    public:
+        int& operator*() const;
+        iterator operator++(int);
+        iterator operator++();
+    };
+
+    bool operator==(IntMatrix::iterator it1, IntMatrix::iterator it2);
+    bool operator!=(IntMatrix::iterator it1, IntMatrix::iterator it2);
+
+    class IntMatrix::const_iterator{
+        Dimensions index;
+        const IntMatrix* mat;
+        const_iterator(const IntMatrix* mat, Dimensions dim);
         friend class IntMatrix;
 
     public:
         const int& operator*() const;
-        Iterator operator++(int);
-        Iterator operator++();
+        iterator operator++(int);
+        iterator operator++();
     };
-    bool operator==(const IntMatrix::Iterator it1, const IntMatrix::Iterator it2);
-    bool operator!=(const IntMatrix::Iterator it1, const IntMatrix::Iterator it2);
 
+    bool operator==(const IntMatrix::iterator it1, const IntMatrix::iterator it2);
+    bool operator!=(const IntMatrix::iterator it1, const IntMatrix::iterator it2);
 }
 
 
