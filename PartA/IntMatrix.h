@@ -47,8 +47,6 @@ namespace mtm {
     bool any(const IntMatrix);                                                  // Aviram
 
 
-    //TODO: do we need to implement d`tor and operator =??
-
 
     class IntMatrix::iterator{
         Dimensions index;
