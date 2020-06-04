@@ -49,13 +49,14 @@ namespace mtm {
     class IntMatrix::iterator{
         Dimensions index;
         const IntMatrix* mat;
-        iterator(const IntMatrix* mat, Dimensions dim);
+      //  iterator(const IntMatrix* mat, Dimensions dim); // Should be public and should be a copy c`tor - (See page 9, last comment)
         friend class IntMatrix;
 
     public:
+        iterator(const IntMatrix* mat);    // Copy c`tor
         int& operator*() const;
-        iterator operator++(int);
-        iterator operator++();
+        iterator operator++(int); // Postfix
+        iterator operator++();    // Prefix
     };
 
     bool operator==(IntMatrix::iterator it1, IntMatrix::iterator it2);
@@ -64,10 +65,11 @@ namespace mtm {
     class IntMatrix::const_iterator{
         Dimensions index;
         const IntMatrix* mat;
-        const_iterator(const IntMatrix* mat, Dimensions dim);
+    //    const_iterator(const IntMatrix* mat, Dimensions dim); // see comment at line 52
         friend class IntMatrix;
 
     public:
+        const_iterator(const IntMatrix* mat); // Copy c`tor
         const int& operator*() const;
         iterator operator++(int);
         iterator operator++();
