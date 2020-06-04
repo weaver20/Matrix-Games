@@ -11,72 +11,80 @@ namespace mtm {
 
     public:
 
-        IntMatrix(const Dimensions&, int = 0);
-        IntMatrix(const IntMatrix&);
-        IntMatrix& operator=(const IntMatrix&);
+        IntMatrix(const Dimensions&, int = 0);      // TODO: Noam
+        IntMatrix(const IntMatrix&);                // TODO: Noam
+        IntMatrix& operator=(const IntMatrix&);     // TODO: Noam
         class iterator;
         class const_iterator;
-        iterator begin() const;
-        iterator end() const;
-        ~IntMatrix();
+        iterator begin() const;                     // Aviram
+        iterator end() const;                       // Aviram
+        ~IntMatrix();                               // TODO: Noam
 
-        IntMatrix& Identity(unsigned int);
-        int height();
-        int width();
-        int size();
-        IntMatrix& transpose();
-        IntMatrix operator+(const IntMatrix) const;
-        IntMatrix operator-() const;
-        IntMatrix operator-(const IntMatrix) const;
-        IntMatrix& operator+=(int);
-        friend std::ostream& operator<<(std::ostream& os, const IntMatrix&);
-        int& operator()(int, int); // Read&Write
-        const int& operator()(int, int) const; // Read Only
-        IntMatrix operator<(int) const;
-        IntMatrix operator<=(int) const;
-        IntMatrix operator>(int) const;
-        IntMatrix operator>=(int) const;
-        IntMatrix operator==(int) const;
-        IntMatrix operator!=(int) const;
+        IntMatrix& Identity(unsigned int);          // Aviram
+        int height();                               // Aviram
+        int width();                                // Aviram
+        int size();                                 // Aviram
+        IntMatrix& transpose();                     // TODO: Noam
+        IntMatrix operator+(const IntMatrix) const; // TODO: Noam
+        IntMatrix operator-() const;                // TODO: Noam
+        IntMatrix operator-(const IntMatrix) const; // TODO: Noam
+        IntMatrix& operator+=(int);                 // TODO: Noam
+        friend std::ostream& operator<<(std::ostream& os, const IntMatrix&);    // Aviram
+        int& operator()(int, int); // Read&Write                                // Aviram
+        const int& operator()(int, int) const; // Read Only                     // Aviram
+        IntMatrix operator<(int) const;                                         // TODO: Noam
+        IntMatrix operator<=(int) const;                                        // TODO: Noam
+        IntMatrix operator>(int) const;                                         // TODO: Noam
+        IntMatrix operator>=(int) const;                                        // TODO: Noam
+        IntMatrix operator==(int) const;                                        // Aviram
+        IntMatrix operator!=(int) const;                                        // Aviram
 
     };
 
-    IntMatrix operator+(const IntMatrix, int);
-    IntMatrix operator+(int, const IntMatrix);
-    bool all(const IntMatrix);
-    bool any(const IntMatrix);
+    IntMatrix operator+(const IntMatrix, int);                                  // TODO: Noam
+    IntMatrix operator+(int, const IntMatrix);                                  // TODO: Noam
+    bool all(const IntMatrix);                                                  // Aviram
+    bool any(const IntMatrix);                                                  // Aviram
+
+
+    //TODO: do we need to implement d`tor and operator =??
+
 
     class IntMatrix::iterator{
         Dimensions index;
         const IntMatrix* mat;
-        iterator(const IntMatrix* mat, Dimensions dim);
+        iterator(const IntMatrix* mat, Dimensions dim);                         // TODO: Noam
         friend class IntMatrix;
 
     public:
         iterator(const iterator&) = default;    // Copy c`tor
-        int& operator*() const;
-        iterator operator++(int); // Postfix
-        iterator operator++();    // Prefix
+        int& operator*() const;                                                 // Aviram
+        iterator operator++(int); // Postfix                                    // Aviram
+        iterator operator++();    // Prefix                                     // Aviram
+       // ~iterator();                             // do we need this? (pending response in forum)
+       // iterator& operator=(const iterator&);    // do we need this? (pending response in forum)
     };
 
-    bool operator==(IntMatrix::iterator it1, IntMatrix::iterator it2);
-    bool operator!=(IntMatrix::iterator it1, IntMatrix::iterator it2);
+    bool operator==(IntMatrix::iterator it1, IntMatrix::iterator it2);          // TODO: Noam
+    bool operator!=(IntMatrix::iterator it1, IntMatrix::iterator it2);          // TODO: Noam
 
     class IntMatrix::const_iterator{
         Dimensions index;
         const IntMatrix* mat;
-        const_iterator(const IntMatrix* mat, Dimensions dim);
+        const_iterator(const IntMatrix* mat, Dimensions dim);                   // TODO: Noam
         friend class IntMatrix;
 
     public:
         const_iterator(const const_iterator&) = default; // Copy c`tor
-        const int& operator*() const;
-        iterator operator++(int);
-        iterator operator++();
+        const int& operator*() const;                                          // Aviram
+        iterator operator++(int);                                              // Aviram
+        iterator operator++();                                                 // Aviram
+        // ~const_iterator();                                   // do we need this? (pending response in forum)
+        // const_iterator& operator=(const const_iterator&);    // do we need this? (pending response in forum)
     };
 
-    bool operator==(const IntMatrix::iterator it1, const IntMatrix::iterator it2);
-    bool operator!=(const IntMatrix::iterator it1, const IntMatrix::iterator it2);
+    bool operator==(const IntMatrix::iterator it1, const IntMatrix::iterator it2);    // TODO: Noam
+    bool operator!=(const IntMatrix::iterator it1, const IntMatrix::iterator it2);    // TODO: Noam
 }
 
 
