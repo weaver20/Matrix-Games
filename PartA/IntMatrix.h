@@ -58,11 +58,11 @@ namespace mtm {
 
     public:
         iterator(const iterator&) = default;    // Copy c`tor
-        int& operator*() const;                                                 // Aviram
-        iterator operator++(int); // Postfix                                    // Aviram
-        iterator operator++();    // Prefix                                     // Aviram
-       // ~iterator();                             // do we need this? (pending response in forum)
-       // iterator& operator=(const iterator&);    // do we need this? (pending response in forum)
+        int& operator*() const;                                                  // Aviram
+        iterator operator++(int); // Postfix                                     // Aviram
+        iterator operator++();    // Prefix                                      // Aviram
+        ~iterator();                                                             // TODO: Noam
+        iterator& operator=(const iterator&);                                    // Aviram
     };
 
     bool operator==(IntMatrix::iterator it1, IntMatrix::iterator it2);          // TODO: Noam
@@ -79,8 +79,8 @@ namespace mtm {
         const int& operator*() const;                                          // Aviram
         iterator operator++(int);                                              // Aviram
         iterator operator++();                                                 // Aviram
-        // ~const_iterator();                                   // do we need this? (pending response in forum)
-        // const_iterator& operator=(const const_iterator&);    // do we need this? (pending response in forum)
+        ~const_iterator();                                                     // TODO: Noam
+        const_iterator& operator=(const const_iterator&);                      // Aviram
     };
 
     bool operator==(const IntMatrix::iterator it1, const IntMatrix::iterator it2);    // TODO: Noam
