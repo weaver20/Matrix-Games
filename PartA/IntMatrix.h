@@ -49,7 +49,7 @@ namespace mtm {
     class IntMatrix::iterator{
         Dimensions index;
         const IntMatrix* mat;
-      //  iterator(const IntMatrix* mat, Dimensions dim); // Should be public and should be a copy c`tor - (See page 9, last comment)
+        iterator(const IntMatrix* mat, Dimensions dim);
         friend class IntMatrix;
 
     public:
@@ -65,7 +65,7 @@ namespace mtm {
     class IntMatrix::const_iterator{
         Dimensions index;
         const IntMatrix* mat;
-    //    const_iterator(const IntMatrix* mat, Dimensions dim); // see comment at line 52
+        const_iterator(const IntMatrix* mat, Dimensions dim);
         friend class IntMatrix;
 
     public:
