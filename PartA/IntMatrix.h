@@ -53,7 +53,7 @@ namespace mtm {
         friend class IntMatrix;
 
     public:
-        iterator(const IntMatrix* mat);    // Copy c`tor
+        iterator(const iterator&) = default;    // Copy c`tor
         int& operator*() const;
         iterator operator++(int); // Postfix
         iterator operator++();    // Prefix
@@ -69,7 +69,7 @@ namespace mtm {
         friend class IntMatrix;
 
     public:
-        const_iterator(const IntMatrix* mat); // Copy c`tor
+        const_iterator(const const_iterator&) = default; // Copy c`tor
         const int& operator*() const;
         iterator operator++(int);
         iterator operator++();
