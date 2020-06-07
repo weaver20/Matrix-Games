@@ -21,17 +21,17 @@ namespace mtm {
         const_iterator end() const;                             // TODO : Me
         iterator end() ;                                        // TODO : Me
         ~IntMatrix();                               // Noam
+        static IntMatrix Identity(unsigned int);                                          // Done
 
-        IntMatrix Identity(unsigned int);                // Done
-        int height();                                    // Done 
-        int width();                                     // Done
-        int size();                                      // Done
-        IntMatrix& transpose();                     // Noam
+        int height() const;                                                              // Done
+        int width() const;                                                               // Done
+        int size() const;                                                                // Done
+        IntMatrix transpose() const;                // Noam
         IntMatrix operator+(const IntMatrix) const; // Noam
         IntMatrix operator-() const;                // Noam
         IntMatrix operator-(const IntMatrix) const; // Noam
         IntMatrix& operator+=(int);                 // Noam
-        friend std::ostream& operator<<(std::ostream& os, const IntMatrix&);                    // Done
+        friend std::ostream& operator<<(std::ostream& os, const IntMatrix&);        // Done
         int& operator()(int, int); // Read&Write                                    // Done
         const int& operator()(int, int) const; // Read Only                         // Done
         IntMatrix operator<(int) const;                                         // Noam
@@ -52,19 +52,20 @@ namespace mtm {
 
 
     class IntMatrix::iterator{
-        Dimensions index;
-        const IntMatrix* mat;
+        int row;
+        int col;
+        IntMatrix* const mat;
         iterator(const IntMatrix* mat, const Dimensions dim);                            // Noam
         friend class IntMatrix;
-        bool isInMainDiagonal();                                                   // Done!
+        bool isInMainDiagonal();                                                    // Done
 
     public:
         iterator(const iterator&) = default;    // Copy c`tor
-        int& operator*() const;                                                       // TODO : Me
-        iterator operator++(int); // Postfix                                          // TODO : Me
-        iterator operator++();    // Prefix                                           // TODO : Me
+        int& operator*() const;                                                       // Done
+        iterator operator++(int); // Postfix                                          // Done
+        iterator operator++();    // Prefix                                           // Done
         ~iterator();                                                             // Noam
-        iterator& operator=(const iterator&);                                         // TODO : Me
+        iterator& operator=(const iterator&);                 // maybe default?         // TODO : Me
 
     };
 
@@ -74,7 +75,8 @@ namespace mtm {
     /* ******************** const_iterator Class ******************** */
 
     class IntMatrix::const_iterator{
-        Dimensions index;
+        int row;
+        int col;
         const IntMatrix* mat;
         const_iterator(const IntMatrix* mat, const Dimensions dim);                   // Noam
         friend class IntMatrix;
@@ -86,12 +88,12 @@ namespace mtm {
         iterator operator++(int);                                                   // TODO : Me
         iterator operator++();                                                      // TODO : Me
         ~const_iterator();                                                     // Noam
-        const_iterator& operator=(const const_iterator&);                           // TODO : Me
+        const_iterator& operator=(const const_iterator&);       // maybe default?         // TODO : Me
 
     };
 
-    bool operator==(const IntMatrix::iterator it1, const IntMatrix::iterator it2);    // Noam
-    bool operator!=(const IntMatrix::iterator it1, const IntMatrix::iterator it2);    // Noam
+    bool operator==(const IntMatrix::const_iterator it1, const IntMatrix::const_iterator it2);    // Noam
+    bool operator!=(const IntMatrix::const_iterator it1, const IntMatrix::const_iterator it2);    // Noam
 }
 
 
