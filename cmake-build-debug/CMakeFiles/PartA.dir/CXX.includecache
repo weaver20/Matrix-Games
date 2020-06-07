@@ -1,0 +1,14 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/avira/CLionProjects/Ex3/PartA/IntMatrix.cpp
+IntMatrix.h
+C:/Users/avira/CLionProjects/Ex3/PartA/IntMatrix.h
+
+C:/Users/avira/CLionProjects/Ex3/PartA/IntMatrix.h
+
