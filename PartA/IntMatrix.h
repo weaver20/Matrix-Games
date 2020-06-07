@@ -22,16 +22,16 @@ namespace mtm {
         iterator end() ;                                        // TODO : Me
         ~IntMatrix();                               // Noam
 
-        IntMatrix Identity(unsigned int);                // Done
-        int height();                                    // Done 
-        int width();                                     // Done
-        int size();                                      // Done
+        IntMatrix Identity(unsigned int);                                          // Done
+        int height();                                                              // Done
+        int width();                                                               // Done
+        int size();                                                                // Done
         IntMatrix& transpose();                     // Noam
         IntMatrix operator+(const IntMatrix) const; // Noam
         IntMatrix operator-() const;                // Noam
         IntMatrix operator-(const IntMatrix) const; // Noam
         IntMatrix& operator+=(int);                 // Noam
-        friend std::ostream& operator<<(std::ostream& os, const IntMatrix&);                    // Done
+        friend std::ostream& operator<<(std::ostream& os, const IntMatrix&);        // Done
         int& operator()(int, int); // Read&Write                                    // Done
         const int& operator()(int, int) const; // Read Only                         // Done
         IntMatrix operator<(int) const;                                         // Noam
@@ -55,7 +55,7 @@ namespace mtm {
         const IntMatrix* mat;
         iterator(const IntMatrix* mat, const Dimensions dim);                            // Noam
         friend class IntMatrix;
-        bool isInMainDiagonal();                                                   // Done!
+        bool isInMainDiagonal();                                                    // Done
 
     public:
         iterator(const iterator&) = default;    // Copy c`tor
