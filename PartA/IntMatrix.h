@@ -50,6 +50,7 @@ namespace mtm {
 
     /* ******************** iterator Class ******************** */
 
+
     class IntMatrix::iterator{
         Dimensions index;
         const IntMatrix* mat;
@@ -64,6 +65,7 @@ namespace mtm {
         iterator operator++();    // Prefix                                           // TODO : Me
         ~iterator();                                                             // Noam
         iterator& operator=(const iterator&);                                         // TODO : Me
+
     };
 
     bool operator==(IntMatrix::iterator it1, IntMatrix::iterator it2);          // Noam
@@ -85,6 +87,7 @@ namespace mtm {
         iterator operator++();                                                      // TODO : Me
         ~const_iterator();                                                     // Noam
         const_iterator& operator=(const const_iterator&);                           // TODO : Me
+
     };
 
     bool operator==(const IntMatrix::iterator it1, const IntMatrix::iterator it2);    // Noam
