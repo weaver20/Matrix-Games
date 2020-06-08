@@ -22,6 +22,22 @@ matrix(new int[dimensions.getCol() * dimensions.getRow()]) {
     }
 }
 
+IntMatrix& IntMatrix::operator=(const IntMatrix& mat){
+    if(this == &mat){
+        return *this;
+    }
+
+    dimensions = Dimensions(mat.height(), mat.width());
+    int col_length = dimensions.getCol();
+    delete[] matrix;
+    matrix = new int[col_length * dimensions.getRow()];
+    for(int i = 0; i < col_length; i++){
+        for(int j = 0; j < dimensions.getRow(); j++){
+            matrix[col_length * i + j] = mat(i, j);
+        }
+    }
+    return *this;
+}
 
 
 
