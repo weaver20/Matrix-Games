@@ -8,6 +8,7 @@ namespace mtm {
     class IntMatrix {
         Dimensions dimensions;
         int *matrix;
+        void markEquals(IntMatrix &to_mark, int num, int mark_value) const;
 
     public:
 
@@ -16,12 +17,12 @@ namespace mtm {
         IntMatrix& operator=(const IntMatrix&);     // Noam
         class iterator;
         class const_iterator;
-        const_iterator begin() const;                           // TODO : Me
-        iterator begin() ;                                      // TODO : Me
-        const_iterator end() const;                             // TODO : Me
-        iterator end() ;                                        // TODO : Me
+        iterator begin() ;                                                               // Done
+        const_iterator begin() const;                                                    // Done
+        iterator end() ;                                                                 // Done
+        const_iterator end() const;                                                      // Done
         ~IntMatrix();                               // Noam
-        static IntMatrix Identity(unsigned int);                                          // Done
+        static IntMatrix Identity(unsigned int);                                         // Done
 
         int height() const;                                                              // Done
         int width() const;                                                               // Done
@@ -45,8 +46,8 @@ namespace mtm {
 
     IntMatrix operator+(const IntMatrix, int);                                  // Noam
     IntMatrix operator+(int, const IntMatrix);                                  // Noam
-    bool all(const IntMatrix);                                                       // TODO : Me
-    bool any(const IntMatrix);                                                       // TODO : Me
+    bool all(const IntMatrix&);                                                       // TODO : Me
+    bool any(const IntMatrix&);                                                       // TODO : Me
 
     /* ******************** iterator Class ******************** */
 
@@ -55,17 +56,17 @@ namespace mtm {
         int row;
         int col;
         IntMatrix* const mat;
-        iterator(const IntMatrix* mat, const Dimensions dim);                            // Noam
+        iterator(const IntMatrix* mat, int col_index, int row_index);                            // Noam
         friend class IntMatrix;
-        bool isInMainDiagonal();                                                    // Done
+        bool isInMainDiagonal() const;                                                    // Done
 
     public:
-        iterator(const iterator&) = default;    // Copy c`tor
+        iterator(const iterator&) = default;
+        iterator& operator=(const iterator&) = default;
         int& operator*() const;                                                       // Done
         iterator operator++(int); // Postfix                                          // Done
         iterator operator++();    // Prefix                                           // Done
         ~iterator();                                                             // Noam
-        iterator& operator=(const iterator&);                 // maybe default?         // TODO : Me
 
     };
 
@@ -78,17 +79,17 @@ namespace mtm {
         int row;
         int col;
         const IntMatrix* mat;
-        const_iterator(const IntMatrix* mat, const Dimensions dim);                   // Noam
+        const_iterator(const IntMatrix* mat, int col_index, int row_index);                   // Noam
         friend class IntMatrix;
 
 
     public:
-        const_iterator(const const_iterator&) = default; // Copy c`tor
-        const int& operator*() const;                                               // TODO : Me
-        iterator operator++(int);                                                   // TODO : Me
-        iterator operator++();                                                      // TODO : Me
+        const_iterator(const const_iterator&) = default;
+        const_iterator& operator=(const const_iterator&) = default;
+        int operator*() const;                                               // Done
+        const_iterator operator++(int);                                      // Done
+        const_iterator operator++();                                         // Done
         ~const_iterator();                                                     // Noam
-        const_iterator& operator=(const const_iterator&);       // maybe default?         // TODO : Me
 
     };
 
