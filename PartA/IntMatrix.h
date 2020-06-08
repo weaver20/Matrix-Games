@@ -11,8 +11,8 @@ namespace mtm {
 
     public:
 
-        IntMatrix(const Dimensions&, int = 0);      // Noam
-        IntMatrix(const IntMatrix&);                // Noam
+        explicit IntMatrix(const Dimensions& dims, int  value = 0); // Done
+        IntMatrix(const IntMatrix&);     // Done!
         IntMatrix& operator=(const IntMatrix&);     // Noam
         class iterator;
         class const_iterator;
