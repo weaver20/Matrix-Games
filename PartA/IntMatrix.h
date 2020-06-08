@@ -55,7 +55,7 @@ namespace mtm {
         int row;
         int col;
         const IntMatrix* mat;
-        iterator(const IntMatrix* const mat, int row = 0, int col = 0);                            // Done
+        explicit iterator(const IntMatrix* mat, int row = 0, int col = 0);  // Done
         friend class IntMatrix;
         bool isInMainDiagonal();                                                    // Done
 
@@ -66,8 +66,8 @@ namespace mtm {
         iterator operator++();    // Prefix                                           // Done
         ~iterator() = default;                                                           // Done
         iterator& operator=(const iterator&) = default;                // maybe default?         // TODO : Me
-        bool operator==(const IntMatrix::iterator& it1); //Done
-        bool operator!=(const IntMatrix::iterator& it1); //Done
+        bool operator==(const IntMatrix::iterator& it1) const; //Done
+        bool operator!=(const IntMatrix::iterator& it1) const; //Done
     };
 
     /* ******************** const_iterator Class ******************** */
@@ -76,7 +76,7 @@ namespace mtm {
         int row;
         int col;
         const IntMatrix* mat;
-        explicit const_iterator(const IntMatrix* mat, int row = 0, int col = 0);                   // Done
+        explicit const_iterator(const IntMatrix* mat, int row = 0, int col = 0);  // Done
         friend class IntMatrix;
 
 
@@ -90,7 +90,7 @@ namespace mtm {
         bool operator==(const IntMatrix::const_iterator& it1);
         bool operator!=(const IntMatrix::const_iterator& it1);
     };
-    
+
 }
 
 

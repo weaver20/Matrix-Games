@@ -155,16 +155,16 @@ IntMatrix operator+(int value, IntMatrix& mat){
     return temp += value;
 }
 
-bool IntMatrix::iterator::operator==(const IntMatrix::iterator& it1){
+bool IntMatrix::iterator::operator==(const IntMatrix::iterator& it1) const{
     assert(it1.mat == mat);
     return *(*this) == *it1;
 }
 
-bool IntMatrix::iterator::operator!=(const IntMatrix::iterator& it1){
+bool IntMatrix::iterator::operator!=(const IntMatrix::iterator& it1) const{
     return !(*this == it1);
 }
 
-IntMatrix::const_iterator::const_iterator(const IntMatrix *mat, int row, int col) : row(row),
+IntMatrix::const_iterator::const_iterator(const IntMatrix*  mat, int row, int col) : row(row),
 col(col), mat(mat){}
 
 bool IntMatrix::const_iterator::operator==(const IntMatrix::const_iterator& it1){
@@ -175,6 +175,9 @@ bool IntMatrix::const_iterator::operator==(const IntMatrix::const_iterator& it1)
 bool IntMatrix::const_iterator::operator!=(const IntMatrix::const_iterator& it1){
     return !(*this == it1);
 }
+
+IntMatrix::iterator::iterator(const IntMatrix* mat, int row, int col) : mat(mat), row(row),
+col(col){}
 
 
 
