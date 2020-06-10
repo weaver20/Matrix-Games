@@ -14,6 +14,7 @@ namespace mtm {
         void markEquals(IntMatrix &to_mark, int num, int mark_value) const;
 
     public:
+
         /**
          *  C`tor - create an IntMatrix in the size of dims and sets all cells to value (default=0)
          * @param dims - size of the matrix
@@ -127,6 +128,8 @@ namespace mtm {
         IntMatrix operator==(int) const;
         IntMatrix operator!=(int) const;
 
+     
+
     };
     /**
      * define a sum of an int with an IntMatrix - IntMatrix as first parameter
@@ -154,12 +157,14 @@ namespace mtm {
     bool any(const IntMatrix&);
 
 
+
     /* ******************** iterator Class ******************** */
 
 
     class IntMatrix::iterator{
         int row;
         int col;
+
         IntMatrix* const mat;
         /*
          * Private C`or used only by IntMatrix class (begin, end functions)
@@ -202,17 +207,21 @@ namespace mtm {
     };
 
 
+
     /* ******************** const_iterator Class ******************** */
 
     class IntMatrix::const_iterator{
         int row;
         int col;
         const IntMatrix* mat;
+
         explicit const_iterator(const IntMatrix* mat, int row = 0, int col = 0);
+
         friend class IntMatrix;
 
 
     public:
+
         const_iterator(const const_iterator&) = default;
         const_iterator& operator=(const const_iterator&) = default;
         ~const_iterator() = default;
@@ -248,6 +257,7 @@ namespace mtm {
 
 
 std::ostream& operator<<(std::ostream& os, const IntMatrix& to_print);
+
 
 
 }
