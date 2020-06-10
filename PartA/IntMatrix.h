@@ -39,8 +39,8 @@ namespace mtm {
         IntMatrix operator<=(int) const;                                        // Noam
         IntMatrix operator>(int) const;                                         // Noam
         IntMatrix operator>=(int) const;                                        // Noam
-        IntMatrix operator==(int) const;                                             // TODO : Me
-        IntMatrix operator!=(int) const;                                             // TODO : Me
+        IntMatrix operator==(int) const;                                             // Done
+        IntMatrix operator!=(int) const;                                             // Done
 
     };
 

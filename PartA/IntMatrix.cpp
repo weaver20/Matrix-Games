@@ -86,6 +86,24 @@ namespace mtm {
         }
     }
 
+    bool all(const IntMatrix& matrix) {
+        bool result = true;
+        for(IntMatrix::const_iterator it = matrix.begin() ; it != matrix.end() ; it++) {
+            if(*it == 0) {
+                result = false;
+            }
+            return result;
+        }
+    }
+    bool any(const IntMatrix& matrix) {
+        for(IntMatrix::const_iterator it = matrix.begin() ; it != matrix.end() ; it++) {
+            if(*it != 0) {
+                return true;
+            }
+            return false;
+        }
+
+    }
 
     /* ******************* iterator functions ******************* */
 
