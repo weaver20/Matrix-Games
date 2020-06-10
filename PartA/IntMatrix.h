@@ -106,7 +106,7 @@ namespace mtm {
          * @param os
          * @return
          */
-        friend std::ostream& operator<<(std::ostream& os, const IntMatrix&);
+        friend std::ostream& operator<<(std::ostream& os, const IntMatrix& to_print);
         /**
          * defining () operator for Matrix - Read & Write
          * @return reference to cell (i,j)
@@ -141,8 +141,8 @@ namespace mtm {
     /**
      *
      * @return
-     *          false - if there`s at least one cell in the matrix that equals 0
-     *          true - otherwise.
+     *          true - there`s no zeroes in the matrix
+     *          false - otherwise
      */
     bool all(const IntMatrix&);
     /**
@@ -152,6 +152,7 @@ namespace mtm {
      *          true - otherwise.
      */
     bool any(const IntMatrix&);
+
 
     /* ******************** iterator Class ******************** */
 
@@ -244,6 +245,9 @@ namespace mtm {
         bool operator!=(const IntMatrix::const_iterator& it1);
 
     };
+
+
+std::ostream& operator<<(std::ostream& os, const IntMatrix& to_print);
 
 
 }
