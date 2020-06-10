@@ -3,10 +3,10 @@
 namespace mtm {
 
     IntMatrix::iterator IntMatrix::begin() {
-        return IntMatrix::iterator(this,0,0);
+        return IntMatrix::iterator(this);
     }
     IntMatrix::const_iterator IntMatrix::begin() const {
-        return IntMatrix::const_iterator(this,0,0);
+        return IntMatrix::const_iterator(this);
     }
     IntMatrix::iterator IntMatrix::end() {
         return IntMatrix::iterator(this, this->height()-1, this->width()-1);

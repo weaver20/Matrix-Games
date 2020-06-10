@@ -44,10 +44,10 @@ namespace mtm {
 
     };
 
-    IntMatrix operator+(const IntMatrix, int);                                  // Noam
-    IntMatrix operator+(int, const IntMatrix);                                  // Noam
-    bool all(const IntMatrix&);                                                       // Done
-    bool any(const IntMatrix&);                                                       // Done
+    IntMatrix operator+(const IntMatrix&, int);                                  // Done
+    IntMatrix operator+(int, const IntMatrix&);                                  // Done
+    bool all(const IntMatrix&);
+    bool any(const IntMatrix&);
 
     /* ******************** iterator Class ******************** */
 
@@ -55,8 +55,8 @@ namespace mtm {
     class IntMatrix::iterator{
         int row;
         int col;
-        IntMatrix* const mat;
-        iterator(const IntMatrix* mat, int col_index, int row_index);                            // Noam
+        const IntMatrix* mat;
+        explicit iterator(const IntMatrix* mat, int row = 0, int col = 0);
         friend class IntMatrix;
         bool isInMainDiagonal() const;                                                    // Done
 
@@ -78,14 +78,14 @@ namespace mtm {
         int row;
         int col;
         const IntMatrix* mat;
-        const_iterator(const IntMatrix* mat, int col_index, int row_index);                   // Noam
+        explicit const_iterator(const IntMatrix* mat, int row = 0, int col = 0);
         friend class IntMatrix;
 
 
     public:
         const_iterator(const const_iterator&) = default;
         const_iterator& operator=(const const_iterator&) = default;
-        ~const_iterator() = default;                                                     // Noam
+        ~const_iterator() = default;
         int operator*() const;                                               // Done
         const_iterator operator++(int);                                      // Done
         const_iterator operator++();                                         // Done
