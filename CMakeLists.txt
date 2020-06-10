@@ -1,15 +1,16 @@
-cmake_minimum_required(VERSION 3.10.2)
-project (Ex3)
+cmake_minimum_required(VERSION 3.16)
+project(Ex3)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 
-include_directories(include)
+include_directories(PartA)
 
-add_executable(PartA
+add_executable(Ex3
         PartA/Auxiliaries.cpp
         PartA/Auxiliaries.h
-        PartA/test_partA.cpp
-        PartA/IntMatrix.cpp)
+        PartA/IntMatrix.cpp
+        PartA/IntMatrix.h
+        PartA/test_partA.cpp)
 
 # Adds compile flags to compilation command of the target hello.
 # first arg: name of the target
