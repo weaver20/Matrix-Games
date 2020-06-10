@@ -159,7 +159,7 @@ namespace mtm {
     class IntMatrix::iterator{
         int row;
         int col;
-        const IntMatrix* mat;
+        IntMatrix* const mat;
         /*
          * Private C`or used only by IntMatrix class (begin, end functions)
          */

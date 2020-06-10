@@ -43,11 +43,12 @@ namespace mtm {
     }
 
     int& IntMatrix::operator()( int row_num, int cul_num)  {
-        return  *(matrix + dimensions.getCol() * row_num + cul_num);
+        // skipping `row_num` rows and than going to 'cul_num' cell in that row.
+        return  *(matrix + width() * row_num + cul_num);
     }
 
     const int& IntMatrix::operator()(int row_num, int cul_num) const {
-        return  *(matrix + dimensions.getCol() * row_num + cul_num);
+        return  *(matrix + width() * row_num + cul_num);
     }
 
 
@@ -60,13 +61,17 @@ namespace mtm {
     }
 
     IntMatrix IntMatrix::operator==(int num) const {
+        // creating an all zeros matrix
         IntMatrix result(dimensions);
+        // marking the cells that equals num  with '1's at the zeros matrix
         markEquals(result,num, 1);
         return result;
     }
 
     IntMatrix IntMatrix::operator!=(int num) const {
+        //creating an all ones matrix
         IntMatrix result(dimensions,1);
+        // marking the cells that equals num with '0' at the ones matrix.
         markEquals(result,num, 0);
         return result;
     }
@@ -89,17 +94,21 @@ namespace mtm {
     bool all(const IntMatrix& matrix) {
         bool result = true;
         for(IntMatrix::const_iterator it = matrix.begin() ; it != matrix.end() ; it++) {
+            // one of the cells is 0
             if(*it == 0) {
                 result = false;
             }
+            // result will stay true if no cell is 0
             return result;
         }
     }
     bool any(const IntMatrix& matrix) {
         for(IntMatrix::const_iterator it = matrix.begin() ; it != matrix.end() ; it++) {
+            // if one of the cells is 0 - return true and end.
             if(*it != 0) {
                 return true;
             }
+            // if no cell is 0 -
             return false;
         }
 
@@ -120,6 +129,7 @@ namespace mtm {
         else {
             col++;
         }
+        // returning iterator before incrementing
         return result;
     }
 
@@ -131,6 +141,7 @@ namespace mtm {
         else {
             col++;
         }
+        // returning incremented iterator
         return *this;
     }
 
@@ -150,6 +161,7 @@ namespace mtm {
         else {
             col++;
         }
+        // returning const_iterator before incrementing
         return result;
     }
 
@@ -161,6 +173,7 @@ namespace mtm {
         else {
             col++;
         }
+        // returning incremented const_iterator
         return *this;
     }
 }
