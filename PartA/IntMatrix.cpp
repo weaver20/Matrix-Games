@@ -213,7 +213,7 @@ IntMatrix::~IntMatrix() {
 
 IntMatrix IntMatrix::transpose() const {
     assert(dimensions.getRow() > 0 and dimensions.getCol() > 0);
-    IntMatrix mat(dimensions);
+    IntMatrix mat(Dimeternsions(dimensions.getCol(), dimensions.getRow()));
     for(IntMatrix::iterator it = mat.begin(); it != mat.end(); ++it){
         *it = mat(it.col, it.row);
     }
