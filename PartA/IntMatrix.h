@@ -164,12 +164,11 @@ namespace mtm {
     class IntMatrix::iterator{
         int row;
         int col;
-
-        IntMatrix* const mat;
+        IntMatrix* mat;
         /*
          * Private C`or used only by IntMatrix class (begin, end functions)
          */
-        explicit iterator(const IntMatrix* mat, int row = 0, int col = 0);
+        explicit iterator(IntMatrix* mat, int row = 0, int col = 0);
         friend class IntMatrix;
         bool isInMainDiagonal() const;
 
@@ -215,7 +214,7 @@ namespace mtm {
         int col;
         const IntMatrix* mat;
 
-        explicit const_iterator(const IntMatrix* mat, int row = 0, int col = 0);
+        explicit const_iterator(const IntMatrix*  mat, int row = 0, int col = 0);
 
         friend class IntMatrix;
 

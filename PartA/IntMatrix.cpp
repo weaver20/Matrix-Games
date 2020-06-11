@@ -100,8 +100,8 @@ bool all(const IntMatrix& matrix) {
             return false;
         }
         // result will stay true if no cell is 0
-        return true;
     }
+    return true;
 }
 bool any(const IntMatrix& matrix) {
     for(IntMatrix::const_iterator it = matrix.begin() ; it != matrix.end() ; it++) {
@@ -112,7 +112,7 @@ bool any(const IntMatrix& matrix) {
         // if no cell is 0 -
         return false;
     }
-
+    return true;
 }
 
 /* ******************* iterator functions ******************* */
@@ -198,7 +198,6 @@ IntMatrix& IntMatrix::operator=(const IntMatrix& mat) {
         return *this;
     }
     dimensions = Dimensions(mat.height(), mat.width());
-    int col_length = dimensions.getCol();
     delete[] matrix;
     matrix = new int[mat.size()];
     for(IntMatrix::iterator it = begin(); it != end(); ++it){
@@ -253,7 +252,7 @@ IntMatrix IntMatrix::operator<(int value) const{
     assert(dimensions.getRow() > 0 and dimensions.getCol() > 0);
     IntMatrix temp1(dimensions), temp2(*this);
 
-    for(IntMatrix::iterator it = temp1.begin(); it != temp1.end(); it){
+    for(IntMatrix::iterator it = temp1.begin(); it != temp1.end(); ++it){
         *it = temp2(it.row, it.col) < value ? 1 : 0;
     }
     return temp1;
@@ -263,7 +262,7 @@ IntMatrix IntMatrix::operator<=(int value) const{
     assert(dimensions.getRow() > 0 and dimensions.getCol() > 0);
     IntMatrix temp1(dimensions), temp2(*this);
 
-    for(IntMatrix::iterator it = temp1.begin(); it != temp1.end(); it){
+    for(IntMatrix::iterator it = temp1.begin(); it != temp1.end(); ++it){
         *it = temp2(it.row, it.col) <= value ? 1 : 0;
     }
     return temp1;
@@ -273,7 +272,7 @@ IntMatrix IntMatrix::operator>(int value) const{
     assert(dimensions.getRow() > 0 and dimensions.getCol() > 0);
     IntMatrix temp1(dimensions), temp2(*this);
 
-    for(IntMatrix::iterator it = temp1.begin(); it != temp1.end(); it){
+    for(IntMatrix::iterator it = temp1.begin(); it != temp1.end(); ++it){
         *it = temp2(it.row, it.col) > value ? 1 : 0;
     }
     return temp1;
@@ -283,7 +282,7 @@ IntMatrix IntMatrix::operator>=(int value) const{
     assert(dimensions.getRow() > 0 and dimensions.getCol() > 0);
     IntMatrix temp1(dimensions), temp2(*this);
 
-    for(IntMatrix::iterator it = temp1.begin(); it != temp1.end(); it){
+    for(IntMatrix::iterator it = temp1.begin(); it != temp1.end(); ++it){
         *it = temp2(it.row, it.col) >= value ? 1 : 0;
     }
     return temp1;
@@ -307,7 +306,7 @@ bool IntMatrix::iterator::operator!=(const IntMatrix::iterator& it1) const{
     return !(*this == it1);
 }
 
-IntMatrix::const_iterator::const_iterator(const IntMatrix*  mat, int row, int col) : row(row),
+IntMatrix::const_iterator::const_iterator(const IntMatrix* mat, int row, int col) : row(row),
 col(col), mat(mat){}
 
 bool IntMatrix::const_iterator::operator==(const IntMatrix::const_iterator& it1){
@@ -318,8 +317,7 @@ bool IntMatrix::const_iterator::operator!=(const IntMatrix::const_iterator& it1)
     return !(*this == it1);
 }
 
-IntMatrix::iterator::iterator(const IntMatrix* mat, int row, int col) : mat(mat), row(row),
-col(col){}
+IntMatrix::iterator::iterator(IntMatrix* mat, int row, int col) : row(row), col(col), mat(mat){}
 
 
 
