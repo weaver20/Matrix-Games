@@ -103,6 +103,11 @@ namespace mtm {
          */
         IntMatrix& operator+=(int);
         /**
+         * define a sum of an int with an IntMatrix - IntMatrix as first parameter
+         * @return the sum of the two
+         */
+        IntMatrix operator+(int);
+        /**
          * defining output operator for matrix
          * @param os
          * @return
@@ -131,11 +136,6 @@ namespace mtm {
      
 
     };
-    /**
-     * define a sum of an int with an IntMatrix - IntMatrix as first parameter
-     * @return the sum of the two
-     */
-    IntMatrix operator+(const IntMatrix&, int);
     /**
     * define a sum of an int with an IntMatrix - int as first parameter
     * @return the sum of the two

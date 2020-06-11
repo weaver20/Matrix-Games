@@ -92,29 +92,30 @@ void IntMatrix::markEquals(IntMatrix &to_mark, int num, int mark_value) const {
         }
     }
 }
+namespace mtm {
+    bool all(const IntMatrix &matrix) {
+        for (IntMatrix::const_iterator it = matrix.begin(); it != matrix.end(); it++) {
+            // one of the cells is 0
+            if (*it == 0) {
+                return false;
+            }
+            // result will stay true if no cell is 0
+        }
+        return true;
+    }
 
-bool all(const IntMatrix& matrix) {
-    for(IntMatrix::const_iterator it = matrix.begin() ; it != matrix.end() ; it++) {
-        // one of the cells is 0
-        if(*it == 0) {
+    bool any(const IntMatrix &matrix) {
+        for (IntMatrix::const_iterator it = matrix.begin(); it != matrix.end(); it++) {
+            // if one of the cells is 0 - return true and end.
+            if (*it != 0) {
+                return true;
+            }
+            // if no cell is 0 -
             return false;
         }
-        // result will stay true if no cell is 0
+        return true;
     }
-    return true;
 }
-bool any(const IntMatrix& matrix) {
-    for(IntMatrix::const_iterator it = matrix.begin() ; it != matrix.end() ; it++) {
-        // if one of the cells is 0 - return true and end.
-        if(*it != 0) {
-            return true;
-        }
-        // if no cell is 0 -
-        return false;
-    }
-    return true;
-}
-
 /* ******************* iterator functions ******************* */
 
 int& IntMatrix::iterator::operator*() const {
@@ -287,15 +288,15 @@ IntMatrix IntMatrix::operator>=(int value) const{
     }
     return temp1;
 }
-
-IntMatrix operator+(const IntMatrix& mat, int value){
-    IntMatrix temp(mat);
+IntMatrix IntMatrix::operator+(int value) {
+    IntMatrix temp(*this);
     return temp += value;
 }
 
-IntMatrix operator+(int value, IntMatrix& mat){
-    IntMatrix temp(mat);
-    return temp += value;
+namespace mtm {
+    IntMatrix operator+(int value, IntMatrix &mat) {
+        return mat + value;
+    }
 }
 
 bool IntMatrix::iterator::operator==(const IntMatrix::iterator& it1) const{
