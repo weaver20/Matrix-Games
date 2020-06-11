@@ -11,16 +11,19 @@ IntMatrix::const_iterator IntMatrix::begin() const {
     return IntMatrix::const_iterator(this);
 }
 IntMatrix::iterator IntMatrix::end() {
-    return IntMatrix::iterator(this, this->height()-1, this->width()-1);
+    return IntMatrix::iterator(this, this->height(), 0);
 }
 
 IntMatrix::const_iterator IntMatrix::end() const {
-    return IntMatrix::const_iterator(this, this->height()-1, this->width()-1);
+    return IntMatrix::const_iterator(this, this->height(), 0);
 }
 
 
 IntMatrix IntMatrix::Identity(unsigned int size) {
     IntMatrix identity_mat = IntMatrix(Dimensions(size,size));
+    if (size == 1){
+        identity_mat(0,0) = 1;
+    }
     for(IntMatrix::iterator it = identity_mat.begin() ; it != identity_mat.end() ; it++ ) {
         if(it.isInMainDiagonal()) {
             *it = 1;
@@ -124,7 +127,7 @@ int& IntMatrix::iterator::operator*() const {
 
 IntMatrix::iterator IntMatrix::iterator::operator++(int) {
     iterator result = *this;
-    if(col == mat->width()) {
+    if(col == mat->width() - 1) {
         col = 0;
         row++;
     }
@@ -136,14 +139,14 @@ IntMatrix::iterator IntMatrix::iterator::operator++(int) {
 }
 
 IntMatrix::iterator IntMatrix::iterator::operator++() {
-    if(col == mat->width()) {
+    if(col == mat->width() - 1) {
         col = 0;
         row++;
     }
     else {
         col++;
     }
-    // returning incremented iterator
+    // returning iterator before incrementing
     return *this;
 }
 
@@ -156,7 +159,7 @@ int IntMatrix::const_iterator::operator*() const {
 
 IntMatrix::const_iterator IntMatrix::const_iterator::operator++(int) {
     const_iterator result = *this;
-    if(col == mat->width()) {
+    if(col == mat->width() - 1) {
         col = 0;
         row++;
     }
@@ -168,7 +171,7 @@ IntMatrix::const_iterator IntMatrix::const_iterator::operator++(int) {
 }
 
 IntMatrix::const_iterator IntMatrix::const_iterator::operator++() {
-    if(col == mat->width()) {
+    if(col == mat->width() - 1) {
         col = 0;
         row++;
     }
@@ -213,7 +216,7 @@ IntMatrix::~IntMatrix() {
 
 IntMatrix IntMatrix::transpose() const {
     assert(dimensions.getRow() > 0 and dimensions.getCol() > 0);
-    IntMatrix mat(Dimeternsions(dimensions.getCol(), dimensions.getRow()));
+    IntMatrix mat(Dimensions(dimensions.getCol(), dimensions.getRow()));
     for(IntMatrix::iterator it = mat.begin(); it != mat.end(); ++it){
         *it = mat(it.col, it.row);
     }
