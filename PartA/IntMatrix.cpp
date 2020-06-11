@@ -288,13 +288,14 @@ IntMatrix IntMatrix::operator>=(int value) const{
     }
     return temp1;
 }
-IntMatrix IntMatrix::operator+(int value) {
+
+IntMatrix IntMatrix::operator+(int value) const{
     IntMatrix temp(*this);
     return temp += value;
 }
 
 namespace mtm {
-    IntMatrix operator+(int value, IntMatrix &mat) {
+    IntMatrix operator+(int value, const IntMatrix &mat) {
         return mat + value;
     }
 }
