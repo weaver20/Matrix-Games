@@ -216,11 +216,12 @@ IntMatrix::~IntMatrix() {
 
 IntMatrix IntMatrix::transpose() const {
     assert(dimensions.getRow() > 0 and dimensions.getCol() > 0);
-    IntMatrix mat(Dimensions(dimensions.getCol(), dimensions.getRow()));
-    for(IntMatrix::iterator it = mat.begin(); it != mat.end(); ++it){
-        *it = mat(it.col, it.row);
+    IntMatrix mat1(*this);
+    IntMatrix mat2(Dimensions(dimensions.getCol(), dimensions.getRow()));
+    for(IntMatrix::iterator it = mat2.begin(); it != mat2.end(); ++it){
+        *it = mat1(it.col, it.row);
     }
-    return mat;
+    return mat2;
 }
 
 IntMatrix IntMatrix::operator+(const IntMatrix& mat) const {
@@ -235,8 +236,9 @@ IntMatrix IntMatrix::operator+(const IntMatrix& mat) const {
 
 IntMatrix IntMatrix::operator-() const {
     IntMatrix temp1(dimensions);
+    IntMatrix temp2(*this);
     for(IntMatrix::iterator it = temp1.begin(); it != temp1.end(); ++it){
-        *it = - temp1(it.row, it.col);
+        *it = - temp2(it.row, it.col);
     }
     return temp1;
 }
