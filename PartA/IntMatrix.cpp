@@ -53,14 +53,14 @@ const int& IntMatrix::operator()(int row_num, int col_name) const {
     return  *(matrix + width() * row_num + col_name);
 }
 
-// TODO: FIX
-std::ostream& operator<<(std::ostream& os, const IntMatrix& to_print) {
-    std::string matrix_in_string = printMatrix(to_print.matrix, to_print.dimensions);
-    os << matrix_in_string;
+namespace mtm {
+    std::ostream &operator<<(std::ostream &os, const IntMatrix &to_print) {
+        std::string matrix_in_string = printMatrix(to_print.matrix, to_print.dimensions);
+        os << matrix_in_string;
 
-    return os;
+        return os;
+    }
 }
-
 
 IntMatrix IntMatrix::operator==(int num) const {
     // creating an all zeros matrix
