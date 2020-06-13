@@ -1,6 +1,6 @@
 
 #include "IntMatrix.h"
-#include <assert.h>
+#include <cassert>
 
 using namespace mtm;
 
@@ -113,10 +113,9 @@ namespace mtm {
             if (*it != 0) {
                 return true;
             }
-            // if no cell is 0 -
-            return false;
         }
-        return true;
+        // if no cell is 0
+        return false;
     }
 }
 /* ******************* iterator functions ******************* */
@@ -197,7 +196,6 @@ matrix(new int[mat.size()]) {
 }
 
 IntMatrix& IntMatrix::operator=(const IntMatrix& mat) {
-    assert(dimensions == mat.dimensions);
     if (this == &mat) {
         return *this;
     }
