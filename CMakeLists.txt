@@ -5,12 +5,19 @@ set(CMAKE_CXX_STANDARD 14)
 
 include_directories(PartA)
 
-add_executable(Ex3
+add_executable(PartA
         PartA/Auxiliaries.cpp
         PartA/Auxiliaries.h
         PartA/IntMatrix.cpp
         PartA/IntMatrix.h
         PartA/test_partA.cpp)
+
+add_executable(PartB
+        PartA/Auxiliaries.cpp
+        PartA/Auxiliaries.h
+        PartB/Matrix.cpp
+        PartB/Matrix.h
+        PartB/test_partB.cpp )
 
 # Adds compile flags to compilation command of the target hello.
 # first arg: name of the target
