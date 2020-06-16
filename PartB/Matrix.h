@@ -10,7 +10,7 @@ namespace mtm {
     template<class T>
     class Matrix {
     Dimensions dimensions;
-    T* data;
+    T* matrix;
 
     public:
 
