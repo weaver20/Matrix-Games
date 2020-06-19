@@ -145,7 +145,7 @@ IntMatrix::iterator IntMatrix::iterator::operator++() {
     else {
         col++;
     }
-    // returning iterator before incrementing
+    // returning incremented iterator
     return *this;
 }
 
