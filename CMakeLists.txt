@@ -1,17 +1,22 @@
 cmake_minimum_required(VERSION 3.16)
 project(Ex3)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 11)
 
-include_directories(PartA)
 
-add_executable(Ex3
+add_executable(PartA
         PartA/Auxiliaries.cpp
         PartA/Auxiliaries.h
         PartA/IntMatrix.cpp
         PartA/IntMatrix.h
-        PartA/test_partA.cpp)
+        PartA/partA_tests.cpp)
 
+
+add_executable(PartB
+        PartB/Matrix.h
+        PartB/Matrix.cpp
+        PartB/Auxiliaries.h
+        )
 # Adds compile flags to compilation command of the target hello.
 # first arg: name of the target
 # second arg: PRIVATE (can also be PUBLIC or INTERFACE)

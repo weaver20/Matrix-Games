@@ -204,7 +204,17 @@ namespace mtm {
              * Exceptions:
              *
              */
-            T& operator*() const {}  // Noam
+            T& operator*() const { // Noam
+                if(*this == *mat->end()) {
+                    throw AccessIllegalElement();
+                }
+
+                if(row >= mat->dimensions.getRow() or col >= mat->dimensions.getCol() or
+                   row < 0 or col < 0){
+                    throw AccessIllegalElement();
+                }
+                return *mat(row, col);
+            }
             /**
              * Increment Postfix operator
              * TODO
@@ -213,7 +223,23 @@ namespace mtm {
              * Exceptions:
              *
              */
-            iterator operator++(int) {} // Noam
+            iterator operator++(int) { // Noam
+                const_iterator result = *this;
+                if(row == mat->dimensions.getRow() - 1 and col == mat->dimensions.getCol() - 1){
+                    throw AccessIllegalElement();
+                }
+                if(col == mat->width() - 1) {
+                    col = 0;
+                    row++;
+                }
+
+                else {
+                    col++;
+                }
+
+                // returning iterator before incrementing
+                return result;
+            }
             /**
              * Increment Prefix operator
              * TODO
@@ -222,7 +248,21 @@ namespace mtm {
              * Exceptions:
              *
             */
-            iterator operator++() {} // Noam
+            iterator operator++() { // Noam
+                if(row == mat->dimensions.getRow() - 1 and col == mat->dimensions.getCol() - 1){
+                    throw AccessIllegalElement();
+                }
+                if(col == mat->width() - 1) {
+                    col = 0;
+                    row++;
+                }
+
+                else {
+                    col++;
+                }
+
+                return *this;
+            }
         };
 
         /* ******************** const_iterator Class ******************** */
@@ -265,26 +305,55 @@ namespace mtm {
              * defining operator * - Read & Write access to cell pointed by iterator
              * @return T& to cell
              */
-            const T& operator*() const {}  // Noam
+            const T& operator*() const { // Noam
+                if(*this == *mat->end()) {
+                    throw AccessIllegalElement();
+                }
+
+                if(row >= mat->dimensions.getRow() or col >= mat->dimensions.getCol() or
+                row < 0 or col < 0){
+                    throw AccessIllegalElement();
+                }
+                return *mat(row, col);
+            }
             /**
              * Increment Postfix operator
              */
-            const_iterator operator++(int) {} // Noam
+            const_iterator operator++(int) { // Noam
+                const_iterator result = *this;
+                if(row == mat->dimensions.getRow() - 1 and col == mat->dimensions.getCol() - 1){
+                    throw AccessIllegalElement();
+                }
+                if(col == mat->width() - 1) {
+                    col = 0;
+                    row++;
+                }
+
+                else {
+                    col++;
+                }
+                // returning iterator before incrementing
+                return result;
+            }
             /**
             * Increment Prefix operator
             */
-            const_iterator operator++() {} // Noam
+            const_iterator operator++() { // Noam
+                if(row == mat->dimensions.getRow() - 1 and col == mat->dimensions.getCol() - 1){
+                    throw AccessIllegalElement();
+                }
+
+                if(col == mat->width() - 1) {
+                    col = 0;
+                    row++;
+                }
+                else {
+                    col++;
+                }
+               
+                return *this;
+            }
         };
-
-
-
-
-
-
-
-
-
-
 
 
         /**
@@ -295,7 +364,9 @@ namespace mtm {
          *
          * Exceptions:
          */
-        iterator begin() {} // Noam
+        iterator begin() { // Noam
+            return Matrix<T>::iterator(this);
+        }
         /**
          * const Matrix begin function
          * @return a const_iterator that points to the first cell (0,0)
@@ -305,7 +376,9 @@ namespace mtm {
          *
          * Exceptions:
          */
-        const_iterator begin() const {} // Noam
+        const_iterator begin() const { // Noam
+            return Matrix<T>::const_iterator(this);
+        }
         /**
          * Matrix end function
          * @return an iterator that points to the last cell in the matrix
@@ -315,7 +388,9 @@ namespace mtm {
          *
          * Exceptions:
          */
-        iterator end() {} // Noam
+        iterator end() { // Noam
+            return Matrix<T>::iterator(this, this->height(), 0);
+        }
         /**
         * const Matrix end function
         * @return a const_iterator that points to the last cell in the matrix
@@ -325,7 +400,9 @@ namespace mtm {
          *
          * Exceptions:
         */
-        const_iterator end() const {} // Noam
+        const_iterator end() const { // Noam
+            return Matrix<T>::const_iterator(this, this->height(), 0);
+        }
         /**
          * a static function that creates a matrix of the size of dim x dim
          * initialize all the cells that are NOT in the main Diagonal to default value
@@ -337,20 +414,49 @@ namespace mtm {
          *
          * Exceptions:
          */
-        static Matrix<T> Diagonal(int dim, const T& init_value) {} // Noam
+        static Matrix<T> Diagonal(int dim, const T& init_value) { // Noam
+            if(dim <= 0){
+                throw IllegalInitialization();
+            }
+            try {
+                Matrix<T> identity_mat = Matrix<T>(Dimensions(dim, dim));
+                if (dim == 1){
+                    identity_mat(0,0) = init_value;
+                }
+                for(Matrix<T>::iterator it = identity_mat.begin() ; it != identity_mat.end() ; it++ ) {
+                    if(it.isInMainDiagonal()) {
+                        *it = init_value;
+                    }
+                }
+                return identity_mat;
+            }
+            catch (std::bad_alloc& ba){
+                std::cerr << "bad alloc caught: " << ba.what() << std::endl;
+                throw;
+            }
+            catch (AccessIllegalElement& a){
+                std::cerr << a.what() << std::endl;
+            }
+        }
 
         /**
          * @return number of lines in matrix
          */
-        inline int height() const {} // Noam
+        inline int height() const { // Noam
+            return dimensions.getRow();
+        }
         /**
          * @return number of columns in matrix
          */
-        inline int width() const {} // Noam
+        inline int width() const { // Noam
+            return dimensions.getCol();
+        }
         /**
          * @return number of cells in matrix
          */
-        inline int size() const {} // Noam
+        inline int size() const { // Noam
+            return dimensions.getRow() * dimensions.getCol();
+        }
         /**
          * defining output operator for matrix
          * @param os
@@ -361,7 +467,12 @@ namespace mtm {
          *
          * Exceptions:
          */
-        friend std::ostream &operator<<(std::ostream &os, const Matrix<T> &to_print) {} // Noam
+        friend std::ostream &operator<<(std::ostream &os, const Matrix<T> &to_print) { // Noam
+            std::string matrix_in_string = printMatrix(to_print.matrix, to_print.dimensions);
+            os << matrix_in_string;
+
+            return os;
+        }
         /**
          * defining () operator for Matrix - Read & Write
          * @return reference to cell (i,j)
@@ -372,7 +483,13 @@ namespace mtm {
          * Exceptions:
          *
          */
-        T& operator()( int row_num, int col_num) {} // Noam
+        T& operator()(int row_num, int col_num){ // Noam
+            if(row_num >= dimensions.getRow() or col_num >= dimensions.getCol() or row_num < 0 or col_num < 0){
+                throw AccessIllegalElement();
+            }
+
+            return matrix[row_num * dimensions.getCol() + col_num];
+        }
         /**
          * defining () operator for Matrix - Read Only
          * @return reference to cell (i,j)
@@ -382,7 +499,13 @@ namespace mtm {
          *
          * Exceptions:
          */
-        const T& operator()( int row_num, int col_num) const {} // Noam
+        const T& operator()( int row_num, int col_num) const { // Noam
+            if(row_num >= dimensions.getRow() or col_num >= dimensions.getCol() or row_num < 0 or col_num < 0){
+                throw AccessIllegalElement();
+            }
+
+            return matrix[row_num * dimensions.getCol() + col_num];
+        }
 
         /**
          * creates a boolean Matrix and sets cells to:
@@ -397,7 +520,28 @@ namespace mtm {
          * Exceptions:
          *
          */
-        Matrix<bool> operator==(const T& t) const {} // Noam
+        Matrix<bool> operator==(const T& t) const { // Noam
+            if(dimensions.getRow() != t.dimensions.getRow() or dimensions.getCol() != t.dimensions.getCol()){
+                throw DimensionMismatch();
+            }
+            try {
+                Matrix<bool> mat(dimensions);
+                iterator it1(mat), it2(t);
+                for (const_iterator it = begin(); it != end() and it1 != mat.end() and it2 != t.end(); it++) {
+                    *it1 = *it == *it2;
+                    it1++;
+                    it2++;
+                }
+                return mat;
+            }
+            catch (std::bad_alloc& ba) {
+                std::cerr << "bad alloc caught: " << ba.what() << std::endl;
+            }
+            catch (AccessIllegalElement& a) {
+                std::cerr << a.what() << std::endl;
+                throw;
+            }
+        }
 
         /**
          * creates a boolean Matrix and sets cells to:
@@ -412,8 +556,13 @@ namespace mtm {
          * Exceptions:
          *
          */
-        Matrix<bool> operator!=(const T& t) const {} // Noam
-
+        Matrix<bool> operator!=(const T& t) const { // Noam
+            Matrix<T> mat = *this == t;
+            for(T element : mat){
+                element = !element;
+            }
+            return mat;
+        }
 
 
 
