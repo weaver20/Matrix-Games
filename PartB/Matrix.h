@@ -7,7 +7,17 @@
 typedef int T;
 
 namespace mtm {
+    /**
+     * Matrix Class
+     * @tparam T - type of data
+     *  basic assumptions of T class:
+     *      no parameters C`tor
+     *      Assignment operator
+     *      T Assignment operator and C`tor throw only std::bad_alloc exceptions.
+     *
+     */
     template<class T>
+
     class Matrix {
         Dimensions dimensions;
         T* matrix;
@@ -15,102 +25,215 @@ namespace mtm {
     public:
         /**
          * Constructor
-         * TODO
          * assumptions of T class:
-         *
-         * @param dims
-         * @param init_value
+         *      basic assumptions.
+         * @param dims - dimensions of the matrix
+         * @param init_value - initialize all the matrix to this value
          * Exceptions:
+         *      IllegalInitialization() - if one of the dimensions are not a positive number
+         *      std::bad_alloc() - if there`s an allocation problem
          */
-        Matrix(const Dimensions& dims, const T& init_value = T())  {}  // Aviram.
+        explicit Matrix(const Dimensions& dims, const T& init_value = T())     // Aviram.
+                : dimensions(dims.getRow(), dims.getCol())
+        {
+            if(dimensions.getRow() <=0 or dimensions.getCol() <=0) {
+                throw IllegalInitialization();
+            }
+
+            matrix = new Matrix<T>[size()];
+            try {
+                for (T element : matrix) {
+                    *element = init_value;
+                }
+            }
+            catch (std::bad_alloc&) {
+                delete[] matrix;
+                throw;
+            }
+
+        }
 
         /**
          * Copy c`tor
-         *  TODO
          * assumptions of T class:
-         *
-         * @param other
-         *
+         *      basic assumptions
+         * @param other - copy this matrix
+         *      std::bad_alloc() - if there`s an allocation problem
          */
-        Matrix<T>(const Matrix<T>& other) {} // Aviram
+        Matrix<T>(const Matrix<T>& other) :                 // Aviram
+                dimensions(other.height(), other.width()) {
+
+            matrix = new Matrix<T>[other.size()];
+            const_iterator other_it = other.begin();        // TODO: Should it be inside the catch?
+            try {
+                for (T element: matrix) {
+                    *element = *(other_it++);
+                }
+            }
+            catch (std::bad_alloc&) {
+                delete[] matrix;
+                throw;
+            }
+
+        }
         /**
          * Assignment operator
-         * TODO
-         * assumptions of T class:
          *
+         * assumptions of T class:
+         *      basic assumptions
          * @param other
+         * Exceptions:
+         *      std::bad_alloc() - if there`s an allocation problem
          */
-        Matrix<T>&  operator=(const Matrix<T>& other) {} // Aviram
+        Matrix<T>&  operator=(const Matrix<T>& other) {     // Aviram
+            if(this == &other) {
+                return *this;
+            }
+            T* temp_matrix = new T[other.size()];
+            Dimensions temp_dims(other.height(), other.width());
+            const_iterator other_it = other.begin();
+            try {
+                for (T element: temp_matrix) {
+                    *element = *(other_it++);
+                }
+            }
+            catch (std::bad_alloc&) {
+                delete[] temp_matrix;
+                throw;
+            }
+            delete[] matrix;
+            matrix = temp_matrix;
+            dimensions = temp_dims;
+
+            return *this;
+
+        }
         /**
          * D`or
-         * TODO
-         * assumptions of T class:
          *
+         * assumptions of T class:
+         *      basic assumptions
+         *      D`or
+         * Exceptions:
+         *      none.
         */
-        ~Matrix<T>() {}         // Aviram
+        ~Matrix<T>() {       // Aviram
+            delete[] matrix;
+        }
 
         /**
          * creates the transposed Matrix
          * TODO
          * assumptions of T class:
-         *
+         *          basic assumptions
+         *          iterator assignment operator
+         *          iterator * operator
          * Exceptions:
+         *      std::bad_alloc() - if there`s an allocation problem
          */
-        Matrix<T> transpose() const {} // Aviram
+        Matrix<T> transpose() const {       // Aviram
+            Matrix<T> transposed_mat(Dimensions(width(),height()));
+            // transposed_mat and this Matrix has the same size!
+
+                for (iterator it = transposed_mat.begin();
+                     it != transposed_mat.end();
+                     it++) {
+                    *it = *this(it.col, it.row);
+                }
+            return transposed_mat;
+
+        }
 
         /**
          * adding two Matrix`s
-         * TODO
          * assumptions of T class:
-         *
+         *      basic assumptions
+         *      += operator
          * Exceptions:
+         *      DimensionMismatch - if the 2 Matrix`s arent at the same size.
+         *      std::bad_alloc() - if there`s an allocation problem
          */
-        Matrix<T> operator+(const Matrix<T>& other) const {} // Aviram
+        Matrix<T> operator+(const Matrix<T>& other) const { // Aviram
+            // validate same size
+            if(dimensions != other.dimensions) {
+                throw DimensionMismatch();
+            }
+            // copy current matrix
+            Matrix<T> sum_mat(*this);
+            const_iterator other_it = other.begin();
+            // sums the second mat to the copy of the first.
+            for(iterator sum_it = sum_mat.begin() ; sum_it != sum_mat.end() ; sum_it++, other_it++) {
+                    *sum_it += *other_it;
+            }
+
+            return sum_mat;
+
+        }
 
         /**
          * unary operator -
-         * TODO
+         *
          * assumptions of T class:
+         *      basic assumptions
+         *      unary operator -
          *
          * Exceptions:
+         *      std::bad_alloc() - if there`s an allocation problem
          */
-        Matrix<T> operator-() const {} // Aviram
+        Matrix<T> operator-() const {           // Aviram
+            Matrix<T> neg_mat(*this);
+
+            for (iterator it = neg_mat.begin() ; it != neg_mat.end() ; it++) {
+                *it = -*it;
+            }
+
+            return neg_mat;
+        }
 
         /**
-         * Binary operator -
-         * TODO
-         * assumptions of T class:
+         * Binary operator (-)
          *
-         * Exceptions:
-         */
-        Matrix<T> operator-(const Matrix<T>& other) const {} // Aviram
-
-        /**
-         * Sum of a Matrix with an Object (Matrix at left side)
-         * TODO
          * assumptions of T class:
-         *
+         *      basic assumptions
+         *      unary operator -
+         *      binary operator +
          * Exceptions:
+         *      std::bad_alloc() - if there`s an allocation problem
          */
-        Matrix<T> operator+(const T& t) const {} // Aviram
-
-        /**
-         * Sum of a Matrix with a T Object (Matrix at right side)
-         * TODO
-         * assumptions of T class:
-         *
-         * Exceptions:
-         */
-        friend Matrix<T> operator+(T& t, const Matrix<T>& mat) {}// Aviram
+        Matrix<T> operator-(const Matrix<T>& other) const {  // Aviram
+            return *this + (-other);
+        }
 
         /**
          *  Sum to current Matrix with a T object
          * TODO
          * assumptions of T class:
-         *
+         *      basic assumptions
+         *      operator +=
          * Exceptions:
          */
-        Matrix<T>& operator+=(const T& t) {} // Aviram
+        Matrix<T>& operator+=(const T& t) {     // Aviram
+
+            for(iterator it = begin(); it != end() ; it++) {
+                *it += t;
+            }
+            return *this;
+        }
+
+        /**
+         * Sum of a Matrix with an Object (Matrix at left side)
+         * TODO
+         * assumptions of T class:
+         *      basic assumptions
+         *      operator +=
+         * Exceptions:
+         *      std::bad_alloc() - if there`s an allocation problem
+         */
+        Matrix<T> operator+(const T& t) const {     // Aviram
+            Matrix<T> temp(*this);
+            return temp += t;
+        }
+
 
         /**
          * defines logical expression <
@@ -119,8 +242,10 @@ namespace mtm {
          *
          * Exceptions:
          */
-        Matrix<bool> operator<(const T& t) const {} // Aviram
+        Matrix<bool> operator<(const T& t) const {      // Aviram
 
+
+        }
         /**
          * defines logical expression <=
          * TODO
@@ -440,7 +565,18 @@ namespace mtm {
             const char* what() const noexcept override  {}
         };
     };
-
+    /**
+       * Sum of a Matrix with a T Object (Matrix at right side)
+       *
+       * assumptions of T class:
+       *      basic assumptions
+       *      operator +
+       * Exceptions:
+       *      std::bad_alloc() - if there`s an allocation problem
+       */
+    Matrix<T> operator+(const T& t, const Matrix<T>& mat) {    // Aviram
+        return mat + t;
+    }
     /**
      * this function checks the boolean values of the object in the matrix
      * @param matrix
