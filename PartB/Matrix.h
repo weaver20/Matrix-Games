@@ -17,7 +17,6 @@ namespace mtm {
      *
      */
     template<class T>
-
     class Matrix {
         Dimensions dimensions;
         T* matrix;
@@ -40,10 +39,10 @@ namespace mtm {
                 throw IllegalInitialization();
             }
 
-            matrix = new Matrix<T>[size()];
+            matrix = new T[size()];
             try {
-                for (T element : matrix) {
-                    *element = init_value;
+                for (iterator it = begin() ; it != end() ; it++) {
+                    *it = init_value;
                 }
             }
             catch (std::bad_alloc&) {
@@ -63,11 +62,11 @@ namespace mtm {
         Matrix<T>(const Matrix<T>& other) :                 // Aviram
                 dimensions(other.height(), other.width()) {
 
-            matrix = new Matrix<T>[other.size()];
-            const_iterator other_it = other.begin();        // TODO: Should it be inside the catch?
+            matrix = new T[other.size()];
+            const_iterator other_it = other.begin();
             try {
-                for (T element: matrix) {
-                    *element = *(other_it++);
+                for (iterator it = begin() ; it != end() ; it++) {
+                    *it = *(other_it++);
                 }
             }
             catch (std::bad_alloc&) {
@@ -93,8 +92,8 @@ namespace mtm {
             Dimensions temp_dims(other.height(), other.width());
             const_iterator other_it = other.begin();
             try {
-                for (T element: temp_matrix) {
-                    *element = *(other_it++);
+                for (iterator it = begin() ; it != end() ; it++) {
+                    *it = *(other_it++);
                 }
             }
             catch (std::bad_alloc&) {
@@ -135,11 +134,11 @@ namespace mtm {
             Matrix<T> transposed_mat(Dimensions(width(),height()));
             // transposed_mat and this Matrix has the same size!
 
-                for (iterator it = transposed_mat.begin();
-                     it != transposed_mat.end();
-                     it++) {
-                    *it = *this(it.col, it.row);
-                }
+            for (iterator it = transposed_mat.begin();
+                 it != transposed_mat.end();
+                 it++) {
+                *it = *this(it.col, it.row);
+            }
             return transposed_mat;
 
         }
@@ -163,7 +162,7 @@ namespace mtm {
             const_iterator other_it = other.begin();
             // sums the second mat to the copy of the first.
             for(iterator sum_it = sum_mat.begin() ; sum_it != sum_mat.end() ; sum_it++, other_it++) {
-                    *sum_it += *other_it;
+                *sum_it += *other_it;
             }
 
             return sum_mat;
@@ -235,44 +234,85 @@ namespace mtm {
         }
 
 
+        // TODO : Fix code Multiplication??
         /**
          * defines logical expression <
-         * TODO
-         * assumptions of T class:
          *
+         * assumptions of T class:
+         *      basic assumptions
+         *      operator <
          * Exceptions:
+         *      std::bad_alloc() - if there`s an allocation problem
          */
         Matrix<bool> operator<(const T& t) const {      // Aviram
+            Matrix<bool> bool_mat(dimensions, false);
+            const_iterator c_it = begin();
 
+            for(iterator bool_it = bool_mat.begin() ;
+                bool_it != bool_mat.end() ;
+                bool_it++, c_it++) {
+
+                if(*c_it < t) {
+                    *bool_it = true;
+                }
+            }
 
         }
         /**
          * defines logical expression <=
-         * TODO
-         * assumptions of T class:
          *
+         * assumptions of T class:
+         *      basic assumptions
+         *      TODO update this!
          * Exceptions:
+         *      std::bad_alloc() - if there`s an allocation problem
          */
-        Matrix<bool> operator<=(const T& t) const {} // Aviram
+        Matrix<bool> operator<=(const T& t) const {             // Aviram
+            return operator==(t) + operator<(t);
+        }
 
         /**
          * defines logical expression >
-         * TODO
-         * assumptions of T class:
          *
+         * assumptions of T class:
+         *      basic assumptions
+         *      TODO: UPDATE THIS
          * Exceptions:
+         *      std::bad_alloc() - if there`s an allocation problem
          */
-        Matrix<bool> operator>(const T& t) const {} // Aviram
-
+        Matrix<bool> operator>(const T& t) const {          // Aviram
+            // creating the "reverse" matrix.
+            Matrix<bool> small_equals = operator<=(t);
+            // "reversing" the matrix. (all true will be false and all false will be true)
+            return small_equals.operator!=(true);
+        }
+        // TODO: Continue here!!!!!!! *********************************************
+        // TODO: Continue here!!!!!!! *********************************************
+        // TODO: Continue here!!!!!!! *********************************************
         /**
          * defines logical expression >=
-         * TODO
-         * assumptions of T class:
          *
+         * assumptions of T class:
+         *      basic assumptions
+         *      operator >=
          * Exceptions:
+         *      std::bad_alloc() - if there`s an allocation problem
          */
-        Matrix<bool> operator>=(const T& t) const {} // Aviram
+        Matrix<bool> operator>=(const T& t) const {         // Aviram
+            Matrix<bool> bool_mat(dimensions, false);
+            const_iterator c_it = begin();
 
+            for(iterator bool_it = bool_mat.begin() ;
+                bool_it != bool_mat.end() ;
+                bool_it++, c_it++) {
+
+                if(*c_it >= t) {
+                    *bool_it = true;
+                }
+            }
+
+
+        }
         /**
          * return a new Matrix with values after application of a functor
          * TODO
@@ -280,8 +320,18 @@ namespace mtm {
          *
          * Exceptions:
          */
-        template<class Application>
-        Matrix<T> apply(Application c) const {} // Aviram
+        template<class Operation>
+        Matrix<T> apply(Operation& operate) const { // Aviram
+
+
+
+
+
+
+
+
+
+        }
 
 
 
