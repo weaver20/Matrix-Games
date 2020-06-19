@@ -10,7 +10,7 @@ add_executable(Ex3
         PartA/Auxiliaries.h
         PartA/IntMatrix.cpp
         PartA/IntMatrix.h
-        PartA/test_partA.cpp)
+        PartA/partA_tests.cpp)
 
 # Adds compile flags to compilation command of the target hello.
 # first arg: name of the target
