@@ -268,6 +268,7 @@ namespace mtm {
          *      std::bad_alloc() - if there`s an allocation problem
          */
         Matrix<bool> operator<=(const T& t) const {             // Aviram
+            // equals boolean matrix + smaller boolean matrix
             return operator==(t) + operator<(t);
         }
 
@@ -286,9 +287,6 @@ namespace mtm {
             // "reversing" the matrix. (all true will be false and all false will be true)
             return small_equals.operator!=(true);
         }
-        // TODO: Continue here!!!!!!! *********************************************
-        // TODO: Continue here!!!!!!! *********************************************
-        // TODO: Continue here!!!!!!! *********************************************
         /**
          * defines logical expression >=
          *
@@ -299,38 +297,27 @@ namespace mtm {
          *      std::bad_alloc() - if there`s an allocation problem
          */
         Matrix<bool> operator>=(const T& t) const {         // Aviram
-            Matrix<bool> bool_mat(dimensions, false);
-            const_iterator c_it = begin();
-
-            for(iterator bool_it = bool_mat.begin() ;
-                bool_it != bool_mat.end() ;
-                bool_it++, c_it++) {
-
-                if(*c_it >= t) {
-                    *bool_it = true;
-                }
-            }
-
+            // equals boolean matrix + bigger boolean matrix
+            return operator==(t) + operator>(t);
 
         }
         /**
          * return a new Matrix with values after application of a functor
          * TODO
          * assumptions of T class:
-         *
+         *      basic assumptions
+         *      assume apply_func accepts T objects.
          * Exceptions:
+         *      std::bad_alloc() - if there`s an allocation problem
          */
-        template<class Operation>
-        Matrix<T> apply(Operation& operate) const { // Aviram
+        template<class Application>
+        Matrix<T> apply(Application apply_func) const { // Aviram
 
-
-
-
-
-
-
-
-
+            Matrix<T> applied_mat(dimensions);
+            const_iterator c_it = begin();
+            for(iterator it = applied_mat.begin() ; it != applied_mat.end() ; it++, c_it++) {
+                *it = apply_func(*c_it);
+            }
         }
 
 
@@ -341,34 +328,67 @@ namespace mtm {
             int col;
             Matrix<T>* mat;
             /** private c`tor used by begin/end functions.
-            * TODO
+            *
             * assumptions of T class:
-            *
+            *       basic assumptions
             * Exceptions:
-            *
+            *       none.
             */
-            explicit iterator(Matrix<T>* mat, int row = 0, int col = 0) {} // Aviram
+            explicit iterator(Matrix<T>* mat, int row = 0, int col = 0) : row(row), col(col), mat(mat) {} // Aviram
             friend class Matrix<T>;
 
         public:
-            iterator(const iterator& it) = default; // TODO is it?
-            iterator& operator=(const iterator&) = default; // TODO is it?
-            ~iterator() = default;  // TODO is it?
+            /** Copy C`tor
+            *
+            * assumptions of T class:
+            *       basic assumptions
+            * Exceptions:
+            *       none.
+            */
+            iterator(const iterator& it) = default;
+
+            /** Assignment Operator
+            *
+            * assumptions of T class:
+            *       basic assumptions
+            * Exceptions:
+            *       none.
+            */
+            iterator& operator=(const iterator&) = default;
+
+            /** D`or
+            *
+            * assumptions of T class:
+            *       basic assumptions
+            * Exceptions:
+            *       none.
+            */
+            ~iterator() = default;
 
             /**
              * boolean equals operator between iterators
              * @param it1 iterator to compare
              * @return true - if it1 points to the same cell in the same matrix as this
              *         false - otherwise.
+             * Exceptions:
+             *       none.
              */
-            bool operator==(const iterator& it1) const;    // Aviram
+            bool operator==(const iterator& it1) const {        // Aviram
+                return it1.mat == mat and it1.row == row and it1.col == col;
+
+            }
             /**
             * boolean not equals operator between iterators
             * @param it1 iterator to compare
             * @return false - if it1 points to the same cell in the same matrix as this
             *         true - otherwise.
+            * Exceptions:
+            *       none.
             */
-            bool operator!=(const iterator& it1) const;    // Aviram
+            bool operator!=(const iterator& it1) const {        // Aviram
+                return not( it1 == *this);
+
+            }
 
             /**
              * defining operator * - Read & Write access to cell pointed by iterator
@@ -407,34 +427,67 @@ namespace mtm {
             int col;
             Matrix<T>* mat;
             /** private c`tor used by begin/end functions.
-            * TODO
+            *
             * assumptions of T class:
-            *
+            *       basic assumptions
             * Exceptions:
-            *
+            *       none.
             */
-            explicit const_iterator(Matrix<T>* mat, int row = 0, int col = 0) {} // Aviram
+            explicit const_iterator(Matrix<T>* mat, int row = 0, int col = 0) : row(row), col(col), mat(mat) {} // Aviram
             friend class Matrix<T>;
 
         public:
+
+            /** Copy C`tor
+            *
+            * assumptions of T class:
+            *       basic assumptions
+            * Exceptions:
+            *       none.
+            */
             const_iterator(const const_iterator& it) = default; // TODO is it?
-            const_iterator& operator=(const const_iterator&) = default; // TODO is it?
-            ~const_iterator() = default;  // TODO is it?
+
+            /** Assignment Operator
+            *
+            * assumptions of T class:
+            *       basic assumptions
+            * Exceptions:
+            *       none.
+            */
+            const_iterator& operator=(const const_iterator&) = default;
+
+            /** D`or
+            *
+            * assumptions of T class:
+            *       basic assumptions
+            * Exceptions:
+            *       none.
+            */
+            ~const_iterator() = default;
 
             /**
              * boolean equals operator between iterators
              * @param it1 iterator to compare
              * @return true - if it1 points to the same cell in the same matrix as this
              *         false - otherwise.
+             * Exceptions:
+             *       none.
              */
-            bool operator==(const const_iterator& it1) const {}   // Aviram
+            bool operator==(const const_iterator& it1) const {   // Aviram
+                return it1.mat == mat and it1.row == row and it1.col == col;
+            }
             /**
             * boolean not equals operator between iterators
             * @param it1 iterator to compare
             * @return false - if it1 points to the same cell in the same matrix as this
             *         true - otherwise.
+            * Exceptions:
+            *       none.
             */
-            bool operator!=(const const_iterator& it1) const {}   // Aviram
+            bool operator!=(const const_iterator& it1) const {   // Aviram
+                return not( it1 == *this);
+
+            }
 
             /**
              * defining operator * - Read & Write access to cell pointed by iterator
@@ -612,7 +665,14 @@ namespace mtm {
             friend class Matrix;
             DimensionMismatch(const Dimensions& first, const Dimensions& second) : first(first), second(second) {}
         public:
-            const char* what() const noexcept override  {}
+            const char* what() const noexcept override  {
+                std::string result =  ("Mtm matrix error: Dimension mismatch: (" +
+                                       (std::string)first.getRow() + "," + (std::string)first.getCol() + ") (" +
+                                       (std::string)second.getRow() + "," + (std::string)second.getCol() + ")");
+
+                const char* c_res = result.c_str();
+                return c_res;
+            }
         };
     };
     /**
