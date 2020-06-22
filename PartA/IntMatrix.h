@@ -30,7 +30,7 @@ namespace mtm {
          * @return a reference to the assigned Matrix.
          */
         IntMatrix& operator=(const IntMatrix&);
-        // iterators to the marix
+        // iterators to the matrix
         class iterator;
         class const_iterator;
         /**

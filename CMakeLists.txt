@@ -23,6 +23,13 @@ add_executable(PartB
         PartB/test_partB.cpp )
 >>>>>>> 5dd51a5138e3ff361eeaec2bc63973307d8aa586
 
+add_executable(PartB
+        PartA/Auxiliaries.cpp
+        PartA/Auxiliaries.h
+        PartB/Matrix.cpp
+        PartB/Matrix.h
+        PartB/test_partB.cpp )
+
 # Adds compile flags to compilation command of the target hello.
 # first arg: name of the target
 # second arg: PRIVATE (can also be PUBLIC or INTERFACE)
