@@ -7,6 +7,7 @@
 typedef int T;
 
 namespace mtm {
+ 
     /**
      * Matrix Class
      * @tparam T - type of data
@@ -16,6 +17,8 @@ namespace mtm {
      *      T Assignment operator and C`tor throw only std::bad_alloc exceptions.
      *
      */
+
+ 
     template<class T>
     class Matrix {
         Dimensions dimensions;
@@ -301,6 +304,7 @@ namespace mtm {
             return operator==(t) + operator>(t);
 
         }
+
         /**
          * return a new Matrix with values after application of a functor
          * TODO
@@ -365,6 +369,7 @@ namespace mtm {
             */
             ~iterator() = default;
 
+
             /**
              * boolean equals operator between iterators
              * @param it1 iterator to compare
@@ -377,6 +382,7 @@ namespace mtm {
                 return it1.mat == mat and it1.row == row and it1.col == col;
 
             }
+
             /**
             * boolean not equals operator between iterators
             * @param it1 iterator to compare
@@ -465,6 +471,7 @@ namespace mtm {
             */
             ~const_iterator() = default;
 
+
             /**
              * boolean equals operator between iterators
              * @param it1 iterator to compare
@@ -476,6 +483,7 @@ namespace mtm {
             bool operator==(const const_iterator& it1) const {   // Aviram
                 return it1.mat == mat and it1.row == row and it1.col == col;
             }
+
             /**
             * boolean not equals operator between iterators
             * @param it1 iterator to compare
@@ -488,6 +496,7 @@ namespace mtm {
                 return not( it1 == *this);
 
             }
+
 
             /**
              * defining operator * - Read & Write access to cell pointed by iterator
