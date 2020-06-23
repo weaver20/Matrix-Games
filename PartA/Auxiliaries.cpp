@@ -1,5 +1,22 @@
 #include "Auxiliaries.h"
 
+std::ostream& mtm::printGameBoard(std::ostream& os, const char* begin, 
+	const char* end, unsigned int width) {
+		std::string delimiter = std::string(2 * width + 1, '*');
+		const char* temp = begin;
+		os << delimiter << std::endl;
+		while(temp != end) {
+			os << "|" << (*temp);
+			++temp;
+			if ((temp - begin) % width == 0)
+				os << "|" << std::endl;
+		}
+		os << delimiter;
+		return os;
+	}
+
+
+// from previous parts
 mtm::Dimensions::Dimensions( int row_t,  int col_t) : row(row_t), col(col_t) {}
 
 std::string mtm::Dimensions::toString() const {
@@ -27,7 +44,7 @@ std::string mtm::printMatrix(const int* matrix,const Dimensions& dim){
     int col_length = dim.getCol();
     for (int i = 0; i <dim.getRow(); i++) {
         for (int j = 0; j < col_length ; j++) {
-            matrix_str+= std::to_string(*(matrix+col_length*i+j)) + " ";
+            matrix_str+= std::to_string(*(matrix+col_length*i+j)) + " "; 
         }
         matrix_str+=  "\n";
     }
