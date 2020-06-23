@@ -65,7 +65,7 @@ namespace mtm {
 
         /**
          * creates the transposed Matrix
-         * TODO
+         *
          * assumptions of T class:
          *          basic assumptions
          *          iterator assignment operator
@@ -112,7 +112,7 @@ namespace mtm {
 
         /**
          * Sum of a Matrix with an Object (Matrix at left side)
-         * TODO
+         *
          * assumptions of T class:
          *      basic assumptions
          *      operator +=
@@ -123,7 +123,7 @@ namespace mtm {
 
         /**
          *  Sum to current Matrix with a T object
-         * TODO
+         *
          * assumptions of T class:
          *      basic assumptions
          *      operator +=
@@ -148,7 +148,9 @@ namespace mtm {
          *
          * assumptions of T class:
          *      basic assumptions
-         *      TODO update this!
+         *      operator <
+         *      operator ==
+         *
          * Exceptions:
          *      std::bad_alloc() - if there`s an allocation problem
          */
@@ -159,7 +161,8 @@ namespace mtm {
          *
          * assumptions of T class:
          *      basic assumptions
-         *      TODO: UPDATE THIS
+         *      operator ==
+         *      operator <
          * Exceptions:
          *      std::bad_alloc() - if there`s an allocation problem
          */
