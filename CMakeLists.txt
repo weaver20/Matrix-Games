@@ -14,8 +14,8 @@ add_executable(PartA
 
 
 add_executable(PartB
-        PartA/Auxiliaries.cpp
-        PartA/Auxiliaries.h
+        PartB/Auxiliaries.cpp
+        PartB/Auxiliaries.h
         PartB/Matrix.h
         PartB/test_partB.cpp )
 
