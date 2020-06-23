@@ -25,7 +25,7 @@ add_executable(PartC
         PartC/Sniper.cpp
         PartC/Game.cpp
         PartC/Auxiliaries.cpp
-        partC/test_partC.cpp)
+        partC/test_partC.cpp PartC/Character.cpp PartC/Character.h)
 # Adds compile flags to compilation command of the target hello.
 # first arg: name of the target
 # second arg: PRIVATE (can also be PUBLIC or INTERFACE)
