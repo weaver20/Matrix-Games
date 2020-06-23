@@ -27,7 +27,7 @@ std::string mtm::printMatrix(const int* matrix,const Dimensions& dim){
     int col_length = dim.getCol();
     for (int i = 0; i <dim.getRow(); i++) {
         for (int j = 0; j < col_length ; j++) {
-            matrix_str+= std::to_string(*(matrix+col_length*i+j)) + " "; 
+            matrix_str+= std::to_string(*(matrix+col_length*i+j)) + " ";
         }
         matrix_str+=  "\n";
     }
