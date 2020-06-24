@@ -3,8 +3,17 @@
 #include "Character.h"
 
 namespace mtm {
-    class Sniper {
 
+    class Sniper : public Character {
+    private:
+    unsigned int attack_counter;
+    public:
+        Sniper(units_t health, units_t ammo, units_t attack_range, units_t power);
+        ~Sniper() = default;
+        Character* clone() const override;
+        bool isInAttackRange(GridPoint& source, GridPoint& dest) const override;
+        units_t getPower() const override;
+        void attackSuccess() override ;
     };
 }
 
