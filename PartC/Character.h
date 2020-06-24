@@ -7,10 +7,10 @@ namespace mtm {
     protected:
         units_t health;
         units_t ammo;
-        const units_t attack_range;
-        const units_t movement_range;
-        const units_t power;
-        const units_t reload_ammount;
+        const units_t kAttackRange;
+        const units_t kMovementRange;
+        const units_t kPower;
+        const units_t kReloadAmmount;
 
     public:
         Character(units_t health, units_t ammo, units_t ,units_t attack_range, units_t power,
