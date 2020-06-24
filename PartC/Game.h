@@ -7,7 +7,7 @@
 #include <memory>
 namespace mtm {
     class Game {
-
+    Matrix<std::shared_ptr<Character>> game_mat;
     public:
         Game(int height, int width);
 
