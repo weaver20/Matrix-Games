@@ -12,6 +12,7 @@ namespace mtm {
      * @tparam T - type of data
      *  basic assumptions of T class:
      *      no parameters C`tor
+     *      D`tor
      *      Assignment operator
      *      T Assignment operator and C`tor throw only std::bad_alloc exceptions.
      *
@@ -57,7 +58,6 @@ namespace mtm {
          *
          * assumptions of T class:
          *      basic assumptions
-         *      D`or
          * Exceptions:
          *      none.
         */
@@ -68,8 +68,6 @@ namespace mtm {
          *
          * assumptions of T class:
          *          basic assumptions
-         *          iterator assignment operator
-         *          iterator * operator
          * Exceptions:
          *      std::bad_alloc() - if there`s an allocation problem
          */
@@ -104,7 +102,7 @@ namespace mtm {
          * assumptions of T class:
          *      basic assumptions
          *      unary operator -
-         *      binary operator +
+         *      += operator
          * Exceptions:
          *      std::bad_alloc() - if there`s an allocation problem
          */
@@ -172,7 +170,8 @@ namespace mtm {
          *
          * assumptions of T class:
          *      basic assumptions
-         *      operator >=
+         *      operator ==
+         *      operator <
          * Exceptions:
          *      std::bad_alloc() - if there`s an allocation problem
          */
@@ -182,13 +181,13 @@ namespace mtm {
          *
          * assumptions of T class:
          *      basic assumptions
+         *      Copy C`tor
          *      assume apply_func accepts T objects and implemented operator ().
-         *
          * Exceptions:
          *      std::bad_alloc() - if there`s an allocation problem
-         */
+         */ // TODO: FIX BACK TO CONST AND CONST_ITERATOR
         template<class Application>
-        Matrix<T> apply(Application apply_func) const;
+        Matrix<T> apply(Application apply_func) const ;
 
 
 
@@ -415,7 +414,7 @@ namespace mtm {
          *
          * TODO
          * assumptions of T class:
-         *
+         *      basic assumptions
          * Exceptions:
          */
         static Matrix<T> Diagonal(int dim, const T& init_value);
@@ -440,7 +439,7 @@ namespace mtm {
          *
          * TODO
          * assumptions of T class:
-         *
+         *      basic assumptions
          * Exceptions:
          *
          */
@@ -451,6 +450,7 @@ namespace mtm {
          *
          * TODO
          * assumptions of T class:
+         *      basic assumptions
          *
          * Exceptions:
          */
@@ -465,7 +465,7 @@ namespace mtm {
          *
          * TODO
          * assumptions of T class:
-         *
+         *      operator ==
          * Exceptions:
          *
          */
@@ -480,6 +480,7 @@ namespace mtm {
          *
          * TODO
          * assumptions of T class:
+         *      operator ==
          *
          * Exceptions:
          *
@@ -487,7 +488,7 @@ namespace mtm {
         Matrix<bool> operator!=(const T& t) const;
 
         // Exception Classes
-    class AccessIllegalElement : public mtm::Exception {
+        class AccessIllegalElement : public mtm::Exception {
         public:
             const char* what() const noexcept override;
         };
@@ -500,6 +501,7 @@ namespace mtm {
         class DimensionMismatch : public mtm::Exception  {
             const Dimensions first;
             const Dimensions second;
+            std::string result;
             friend class Matrix;
             /**
              * This exception requires information about the dimensions of the Matrix`s.
@@ -516,7 +518,7 @@ namespace mtm {
 
     template<class T>
     Matrix<T>::const_iterator::const_iterator(const Matrix<T> *mat, int row, int col)
-    : row(row), col(col), mat(mat) {}
+            : row(row), col(col), mat(mat) {}
 
     template<class T>
     bool Matrix<T>::const_iterator::operator==(const Matrix::const_iterator &it1) const {   // Aviram
@@ -567,7 +569,7 @@ namespace mtm {
 
     template<class T>
     Matrix<T>::iterator::iterator(Matrix<T> *mat, int row, int col)
-    : row(row), col(col), mat(mat) {}
+            : row(row), col(col), mat(mat) {}
 
     template<class T>
     bool Matrix<T>::iterator::operator==(const Matrix::iterator &it1) const {        // Aviram
@@ -686,12 +688,14 @@ namespace mtm {
             return *this;
         }
         T* temp_matrix = new T[other.size()];
+        T* temp_it = temp_matrix;
         Dimensions temp_dims(other.height(), other.width());
-        const_iterator other_it = other.begin();
+
         try {
-            for (iterator it = begin() ; it != end() ; it++) {
-                *it = *(other_it++);
+            for(const_iterator other_it = other.begin(); other_it != other.end()  ; other_it++, temp_it++) {
+                *temp_it = *(other_it);
             }
+
         }
         catch (std::bad_alloc&) {
             delete[] temp_matrix;
@@ -808,10 +812,9 @@ namespace mtm {
     template<class Application>
     Matrix<T> Matrix<T>::apply(Application apply_func) const { // Aviram
 
-        Matrix<T> applied_mat(dimensions);
-        const_iterator c_it = begin();
-        for(iterator it = applied_mat.begin() ; it != applied_mat.end() ; it++, c_it++) {
-            *it = apply_func(*c_it);
+        Matrix<T> applied_mat(*this);
+        for(iterator it = applied_mat.begin() ; it != applied_mat.end() ; it++) {
+            *it = apply_func(*it);
         }
         return  applied_mat;
     }
@@ -919,7 +922,10 @@ namespace mtm {
        */
     template<class T>
     Matrix<T> operator+(const T& t, const Matrix<T>& mat) {    // Aviram
-        return mat + t;
+        // creating a matrix initialized with t in every cell
+        Matrix<T> t_mat(Dimensions(mat.height(),mat.width()),t);
+        // summing the t matrix with mat.
+        return t_mat + mat;
     }
     /**
      * this function checks the boolean values of the object in the matrix
@@ -972,8 +978,12 @@ namespace mtm {
 
     template<class T>
     const char *Matrix<T>::DimensionMismatch::what() const noexcept  {
+        return result.c_str();
+    }
 
-        std::string result =  "Mtm matrix error: Dimension mismatch: (" + std::to_string(first.getRow());
+    template<class T>
+    Matrix<T>::DimensionMismatch::DimensionMismatch(const Dimensions &first, const Dimensions &second)  : first(first), second(second) {
+        result =  "Mtm matrix error: Dimension mismatch: (" + std::to_string(first.getRow());
         result.append(",");
         result.append(std::to_string(first.getCol()));
         result.append(") (");
@@ -982,12 +992,7 @@ namespace mtm {
         result.append(std::to_string(second.getCol()));
         result.append(+ ")");
 
-        const char* c_res = result.c_str();
-        return c_res;
     }
-
-    template<class T>
-    Matrix<T>::DimensionMismatch::DimensionMismatch(const Dimensions &first, const Dimensions &second)  : first(first), second(second) {}
 }
 
 #endif //EX3_MATRIX_H
