@@ -1,6 +1,7 @@
 #ifndef EX3_CHARACTER_H
 #define EX3_CHARACTER_H
 #include "Auxiliaries.h"
+
 namespace mtm {
     class Character {
 
@@ -10,7 +11,7 @@ namespace mtm {
         const units_t kAttackRange;
         const units_t kMovementRange;
         const units_t kPower;
-        const units_t kReloadAmmount;
+        const units_t kReloadAmount;
 
     public:
         Character(units_t health, units_t ammo, units_t ,units_t attack_range, units_t power,
@@ -27,7 +28,7 @@ namespace mtm {
          */
         virtual Character* clone() const = 0;
         /**
-         * reloads ammo with reload_ammount
+         * reloads ammo with reload_amount
          */
         void reload();
         /**
