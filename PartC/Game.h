@@ -4,15 +4,41 @@
 #include "Medic.h"
 #include "Sniper.h"
 #include "../PartB/Matrix.h"
+#include <Auxiliaries.h>
 #include <memory>
+
 namespace mtm {
     class Game {
-    Matrix<std::shared_ptr<Character>> game_mat;
+        Matrix<std::shared_ptr<Character>> game_mat;
     public:
+        /**
+         * Creates a GameBoard sized height x width - a Matrix of shared_ptr of Characters.
+         * initialize all GridPoints to nullptr.
+         * @param height
+         * @param width
+         * Exceptions:
+         *      std::bad_alloc - if an allocation error occurred.
+         *      IllegalArgument - if height/width is not positive.
+         */
         Game(int height, int width);
-
+        /**
+         * Copy C`tor
+         * copies an existing gameboard and clones all existing Characters on the board.
+         * @param other
+         * Exceptions:
+         *      std::bad_alloc - if an allocation error occurred.
+         *
+         */
         Game(const Game &other);
 
+        /**
+         * Assignment operator
+         * copies an existing gameboard and clones all existing Characters on the board.
+         * @param other
+         * @return
+         * Exceptions:
+         *      std::bad_alloc - if an allocation error occurred.
+         */
         Game &operator=(const Game &other);
 
         ~Game();
@@ -34,37 +60,38 @@ namespace mtm {
         bool isOver(Team *winningTeam = NULL) const;
 
 
-        class Exception : public mtm::Exception {
-        };
-        class IllegalArgument : public Exception {
+        class GameException : public mtm::Exception {};
+
+
+        class IllegalArgument : public GameException {
         public:
             const char* what() const noexcept override;
         };
-        class IllegalCell : public Exception {
+        class IllegalCell : public GameException {
         public:
             const char* what() const noexcept override;
         };
-        class CellEmpty : public Exception {
+        class CellEmpty : public GameException {
         public:
             const char* what() const noexcept override;
         };
-        class MoveTooFar : public Exception {
+        class MoveTooFar : public GameException {
         public:
             const char* what() const noexcept override;
         };
-        class CellOccupied : public Exception {
+        class CellOccupied : public GameException {
         public:
             const char* what() const noexcept override;
         };
-        class OutOfRange : public Exception {
+        class OutOfRange : public GameException {
         public:
             const char* what() const noexcept override;
         };
-        class OutOfAmmo : public Exception {
+        class OutOfAmmo : public GameException {
         public:
             const char* what() const noexcept override;
         };
-        class IllegalTarget : public Exception {
+        class IllegalTarget : public GameException {
         public:
             const char* what() const noexcept override;
         };
