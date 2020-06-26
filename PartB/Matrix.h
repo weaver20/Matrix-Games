@@ -488,17 +488,17 @@ namespace mtm {
         Matrix<bool> operator!=(const T& t) const;
 
         // Exception Classes
-        class AccessIllegalElement : public mtm::Exception {
+    class AccessIllegalElement : public std::exception {
         public:
             const char* what() const noexcept override;
         };
 
-        class IllegalInitialization : public mtm::Exception  {
+        class IllegalInitialization : public std::exception  {
         public:
             const char* what() const noexcept override;
         };
 
-        class DimensionMismatch : public mtm::Exception  {
+    class DimensionMismatch : public std::exception  {
             const Dimensions first;
             const Dimensions second;
             std::string result;
@@ -942,8 +942,15 @@ namespace mtm {
      */
     template<class T>
     bool all(const Matrix<T>& matrix) {
+        for (typename Matrix<T>::const_iterator it = matrix.begin(); it != matrix.end(); it++) {
+            // one of the cells is 0
+            if (*it == false) {
+                return false;
+            }
+            // result will stay true if no cell is 0
+        }
         return true;
-    } // Noam
+    }
 
     /**
      * this function checks the boolean values of the object in the matrix
@@ -961,7 +968,14 @@ namespace mtm {
      */
     template<class T>
     bool any(const Matrix<T>& matrix) { // Noam
-        return true;
+        for (typename Matrix<T>::const_iterator it = matrix.begin(); it != matrix.end(); it++) {
+            // if one of the cells is 0 - return true and end.
+            if (*it == true) {
+                return true;
+            }
+        }
+        // if no cell is 0
+        return false;
     }
 
 
