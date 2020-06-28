@@ -944,7 +944,7 @@ namespace mtm {
     bool all(const Matrix<T>& matrix) {
         for (typename Matrix<T>::const_iterator it = matrix.begin(); it != matrix.end(); it++) {
             // one of the cells is 0
-            if (*it == false) {
+            if (bool(*it) == false) {
                 return false;
             }
             // result will stay true if no cell is 0
@@ -970,7 +970,7 @@ namespace mtm {
     bool any(const Matrix<T>& matrix) { // Noam
         for (typename Matrix<T>::const_iterator it = matrix.begin(); it != matrix.end(); it++) {
             // if one of the cells is 0 - return true and end.
-            if (*it == true) {
+            if (bool(*it) == true) {
                 return true;
             }
         }

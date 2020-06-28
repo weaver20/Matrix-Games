@@ -17,7 +17,7 @@ add_executable(PartB
         PartB/Auxiliaries.cpp
         PartB/Auxiliaries.h
         PartB/Matrix.h
-        PartB/test_partB.cpp )
+        PartB/partB_tester.cpp )
 
 add_executable(PartC
         PartC/Soldier.cpp
@@ -25,7 +25,7 @@ add_executable(PartC
         PartC/Sniper.cpp
         PartC/Game.cpp
         PartC/Auxiliaries.cpp
-        partC/test_partC.cpp PartC/Character.cpp PartC/Character.h)
+        partC/test_partC.cpp PartC/Character.cpp PartC/Character.h PartC/Exceptions.cpp PartC/Exceptions.h)
 # Adds compile flags to compilation command of the target hello.
 # first arg: name of the target
 # second arg: PRIVATE (can also be PUBLIC or INTERFACE)
