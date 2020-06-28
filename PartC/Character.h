@@ -12,10 +12,11 @@ namespace mtm {
         const units_t kMovementRange;
         const units_t kPower;
         const units_t kReloadAmount;
+        const Team kTeam;
 
     public:
-        Character(units_t health, units_t ammo, units_t ,units_t attack_range, units_t power,
-                  units_t move_range, units_t reload_ammount);
+        Character(units_t health, units_t ammo, units_t, units_t attack_range, units_t power, units_t move_range,
+                  units_t reload_amount, Team team);
 
         Character(Character&) = default;            // TODO is it?
         Character& operator=(Character&) = delete ; // TODO is it?
@@ -80,11 +81,12 @@ namespace mtm {
          * @return  true - if an attack is in range
          *          false - otherwise.
          */
-        virtual bool isInAttackRange(GridPoint& source, GridPoint& dest) const = 0;
+         virtual bool isInAttackRange(GridPoint& source, GridPoint& dest) const = 0;
 
 
 
     };
+
 }
 
 #endif //EX3_CHARACTER_H
