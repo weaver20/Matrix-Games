@@ -7,6 +7,9 @@
 //typedef int T;
 
 namespace mtm {
+
+    class Exception : public std::exception {};
+
     /**
      * Matrix Class
      * @tparam T - type of data
@@ -488,17 +491,17 @@ namespace mtm {
         Matrix<bool> operator!=(const T& t) const;
 
         // Exception Classes
-    class AccessIllegalElement : public std::exception {
+    class AccessIllegalElement : public mtm::Exception {
         public:
             const char* what() const noexcept override;
         };
 
-        class IllegalInitialization : public std::exception  {
+        class IllegalInitialization : public mtm::Exception  {
         public:
             const char* what() const noexcept override;
         };
 
-    class DimensionMismatch : public std::exception  {
+    class DimensionMismatch : public mtm::Exception  {
             const Dimensions first;
             const Dimensions second;
             std::string result;
