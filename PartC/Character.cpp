@@ -1,7 +1,8 @@
 #include "Character.h"
 
-mtm::Character::Character(mtm::units_t health, mtm::units_t ammo, mtm::units_t, mtm::units_t attack_range,
-                          mtm::units_t power, mtm::units_t move_range, mtm::units_t reload_ammount) {
+mtm::Character::Character(units_t health, units_t ammo, units_t, units_t attack_range, units_t power,
+                          units_t move_range,
+                          units_t reload_amount, Team team) {
 
 }
 
