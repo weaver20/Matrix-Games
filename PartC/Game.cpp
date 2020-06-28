@@ -11,7 +11,7 @@ namespace mtm {
     }
 
     Game &Game::operator=(const Game &other) {
-        return <#initializer#>;
+
     }
 
     Game::~Game() {
@@ -24,7 +24,7 @@ namespace mtm {
 
     std::shared_ptr<Character>
     Game::makeCharacter(CharacterType type, Team team, units_t health, units_t ammo, units_t range, units_t power) {
-        return std::shared_ptr<Character>();
+
     }
 
     void Game::move(const GridPoint &src_coordinates, const GridPoint &dst_coordinates) {
@@ -40,11 +40,11 @@ namespace mtm {
     }
 
     std::ostream &Game::printGameBoard(std::ostream &os, const char *begin, const char *end, unsigned int width) const {
-        return <#initializer#>;
+
     }
 
     bool Game::isOver(Team *winningTeam) const {
-        return false;
+
     }
 
 
