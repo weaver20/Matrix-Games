@@ -20,11 +20,34 @@ namespace mtm {
 
     void Game::addCharacter(const GridPoint &coordinates, std::shared_ptr<Character> character) {
 
+        if(game_mat(coordinates.row,coordinates.col) != nullptr) {
+            throw CellOccupied();
+        }
+        else {
+            game_mat(coordinates.row,coordinates.col) = character;
+        }
+
     }
 
     std::shared_ptr<Character>
     Game::makeCharacter(CharacterType type, Team team, units_t health, units_t ammo, units_t range, units_t power) {
 
+        if((team != CPP and team != PYTHON) or health <= 0 or ammo < 0 or range < 0 or power < 0) {
+            throw IllegalArgument();
+        }
+
+        if(type == SOLDIER) {
+            return std::shared_ptr<Character>(new Soldier(team, health, ammo, range, power));
+        }
+        else if(type == MEDIC) {
+            return std::shared_ptr<Character>(new Medic(team, health, ammo, range, power));
+        }
+        else if(type == SNIPER) {
+            return std::shared_ptr<Character>(new Sniper(team, health,ammo,range,power));
+        }
+        else {
+            throw IllegalArgument();
+        }
     }
 
     void Game::move(const GridPoint &src_coordinates, const GridPoint &dst_coordinates) {

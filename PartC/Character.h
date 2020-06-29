@@ -15,8 +15,8 @@ namespace mtm {
         const Team kTeam;
 
     public:
-        Character(units_t health, units_t ammo, units_t, units_t attack_range, units_t power, units_t move_range,
-                  units_t reload_amount, Team team);
+        Character(Team team, units_t health, units_t ammo, units_t, units_t attack_range, units_t power, units_t move_range,
+                  units_t reload_amount);
 
         Character(Character&) = default;            // TODO is it?
         Character& operator=(Character&) = delete ; // TODO is it?

@@ -7,7 +7,7 @@ namespace mtm {
 
 
     public:
-        Soldier(units_t health, units_t ammo, units_t attack_range, units_t power);
+        Soldier(Team team, units_t health, units_t ammo, units_t attack_range, units_t power);
         Soldier(Soldier&) = delete ;
 
         Character* clone() const override;
