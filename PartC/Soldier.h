@@ -11,8 +11,9 @@ namespace mtm {
         Soldier(Soldier&) = delete ;
 
         Character* clone() const override;
-        bool isInAttackRange(GridPoint& source, GridPoint& dest) const override;
-
+        bool canAttackThere(const GridPoint &source, const GridPoint &dest) const override;
+        AttackResult attackVictim(std::shared_ptr<Character> victim) override;
+        void attackGrid(Matrix<std::shared_ptr<Character>>& game_mat,const GridPoint& dst_coordinates) override ;
     };
 }
 

@@ -1,26 +1,34 @@
 #ifndef EX3_CHARACTER_H
 #define EX3_CHARACTER_H
 #include "Auxiliaries.h"
+#include "PartCMatrix.h"
+#include "Exceptions.h"
+#include <memory>
 
 namespace mtm {
+
+    enum AttackResult  {DEAD, STILL_ALLIVE};
+
     class Character {
 
     protected:
+        const Team kTeam;
         units_t health;
         units_t ammo;
         const units_t kAttackRange;
-        const units_t kMovementRange;
         const units_t kPower;
+        const units_t kMovementRange;
         const units_t kReloadAmount;
-        const Team kTeam;
 
     public:
-        Character(Team team, units_t health, units_t ammo, units_t, units_t attack_range, units_t power, units_t move_range,
+        Character(Team team, units_t health, units_t ammo, units_t attack_range, units_t power, units_t move_range,
                   units_t reload_amount);
 
-        Character(Character&) = default;            // TODO is it?
-        Character& operator=(Character&) = delete ; // TODO is it?
+        Character(Character&) = default;
+        Character& operator=(Character&) = delete ; // Can't change const values after init.
         ~Character() = default;
+
+        bool isFriend(std::shared_ptr<Character>& other);
 
         /**
          * this abstract function implemented by inheriting classes clones the Object.
@@ -35,7 +43,7 @@ namespace mtm {
         /**
          * decrement ammo in case of a Successful attack.
          */
-        virtual void attackSuccess();
+         void useAmmo();
         /**
          * adds med to health in case of Medic Healing
          * @param med
@@ -45,7 +53,7 @@ namespace mtm {
          * removes hit from health in case of an attack
          * @param hit
          */
-        void getHit(units_t hit);
+        AttackResult getHit(units_t hit);
 
         /**
          * Character has no more ammo
@@ -53,7 +61,7 @@ namespace mtm {
          *      true - if ammo = 0.
          *      false - if ammo > 0.
          */
-        bool outOfAmmo() const; // maybe just an exception thrown by attackSuccess))
+        bool isOutOfAmmo() const; // maybe just an exception thrown by attackSuccess))
         /**
          * Character health is 0
          * @return
@@ -81,9 +89,11 @@ namespace mtm {
          * @return  true - if an attack is in range
          *          false - otherwise.
          */
-         virtual bool isInAttackRange(GridPoint& source, GridPoint& dest) const = 0;
+         virtual bool canAttackThere(const GridPoint &source, const GridPoint &dest) const = 0;
 
+        virtual AttackResult attackVictim(std::shared_ptr<Character> victim) = 0;
 
+        virtual void attackGrid(Matrix<std::shared_ptr<Character>>& game_mat,const GridPoint& dst_coordinates);
 
     };
 

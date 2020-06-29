@@ -11,9 +11,10 @@ namespace mtm {
         Sniper(Team team, units_t health, units_t ammo, units_t attack_range, units_t power);
         ~Sniper() = default;
         Character* clone() const override;
-        bool isInAttackRange(GridPoint& source, GridPoint& dest) const override;
+        bool canAttackThere(const GridPoint &source, const GridPoint &dest) const override;
         units_t getPower() const override;
         void attackSuccess() override ;
+        AttackResult attackVictim(std::shared_ptr<Character> victim) override;
     };
 }
 

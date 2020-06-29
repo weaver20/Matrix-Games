@@ -1,39 +1,53 @@
 #include "Character.h"
+#include <cassert>
+mtm::Character::Character(Team team, units_t health, units_t ammo, units_t attack_range, units_t power, units_t move_range,
+                          units_t reload_amount) :
+                          kTeam(team), health(health), ammo(ammo), kAttackRange(attack_range), kPower(power),
+                          kMovementRange(move_range), kReloadAmount(reload_amount) {}
 
-mtm::Character::Character(units_t health, units_t ammo, units_t, units_t attack_range, units_t power,
-                          units_t move_range,
-                          units_t reload_amount, Team team) {
-
+inline void mtm::Character::reload() {
+ammo += kReloadAmount;
+}
+                    // TODO: what About this?
+void mtm::Character::useAmmo() {
+    assert(ammo > 0);
+    ammo--;
 }
 
-void mtm::Character::reload() {
-
+inline void mtm::Character::acceptMedicine(mtm::units_t med) {
+    assert(med >= 0);
+    health += med;
+}
+                    // TODO maybe do something in case of death? Exception: isDead() ??? maybe return enum {WasKilled, StillAllive}
+inline mtm::AttackResult mtm::Character::getHit(mtm::units_t hit) {
+    assert(hit >= 0);
+    health -= hit;
+    if (health <= 0 ) {
+        health = 0;
+        return DEAD;
+    }
+    return STILL_ALLIVE;
 }
 
-void mtm::Character::attackSuccess() {
-
+inline bool mtm::Character::isOutOfAmmo() const {
+    return ammo == 0;
 }
 
-void mtm::Character::acceptMedicine(mtm::units_t med) {
-
+inline bool mtm::Character::isDead() const {
+    return health == 0;
 }
 
-void mtm::Character::getHit(mtm::units_t hit) {
-
+inline mtm::units_t mtm::Character::getPower() const {
+    return kPower;
 }
 
-bool mtm::Character::outOfAmmo() const {
-    return false;
+inline mtm::units_t mtm::Character::getMoveRange() const {
+    return kMovementRange;
 }
 
-bool mtm::Character::isDead() const {
-    return false;
+bool mtm::Character::isFriend(std::shared_ptr<Character> &other) {
+    return kTeam == other->kTeam;
 }
 
-mtm::units_t mtm::Character::getPower() const {
-    return 0;
-}
-
-mtm::units_t mtm::Character::getMoveRange() const {
-    return 0;
-}
+void
+mtm::Character::attackGrid(mtm::Matrix<std::shared_ptr<Character>> &game_mat, const mtm::GridPoint &dst_coordinates) {}

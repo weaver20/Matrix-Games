@@ -1,4 +1,6 @@
 #include "Soldier.h"
+#define COLLATERAL_DAMAGE_RADIUS_FACTOR 3
+#define COLLATERAL_DAMAGE_POWER_FACTOR 2
 
 namespace mtm {
 
@@ -11,7 +13,48 @@ namespace mtm {
         return nullptr;
     }
 
-    bool Soldier::isInAttackRange(GridPoint &source, GridPoint &dest) const {
-        return false;
+    bool Soldier::canAttackThere(const GridPoint &source, const GridPoint &dest) const {
+        // one of values (row/col) must be equalls at source and at dest
+        // distance must be inside attack range.
+        return (source.row == dest.row or source.col == dest.col) and
+               GridPoint::distance(source,dest) <= kAttackRange;
     }
+
+    AttackResult Soldier::attackVictim(std::shared_ptr<Character> victim) {
+        // no Ammo to attack.
+        if(isOutOfAmmo()) {
+            throw OutOfAmmo();
+        }
+        // the attack is legal - but nothing to do.
+        if(victim == nullptr or isFriend(victim)) {
+            return STILL_ALLIVE;
+        }
+        // victim is an Enemy! - Attacking:
+        AttackResult result = victim->getHit(getPower());
+        return result;
+    }
+
+    void Soldier::attackGrid(Matrix<std::shared_ptr<Character>> &game_mat, const GridPoint &dst_coordinates) {
+
+        for(Matrix<std::shared_ptr<Character>>::iterator it= game_mat.begin() ; it != game_mat.end() ; it++) {
+
+            // Character is in Secondary Attack Range
+            if(GridPoint::distance(dst_coordinates,it.getGridPoint()) <= kAttackRange/COLLATERAL_DAMAGE_RADIUS_FACTOR ) {
+                // Character is an Enemy!
+                if(*it != nullptr and !isFriend(*it)) {
+
+                    // Attacking!
+                    AttackResult res = (*it)->getHit(getPower()/COLLATERAL_DAMAGE_POWER_FACTOR);
+                    // if Enemy is dead - remove corpse.
+                    if (res == DEAD) {
+                        *it = nullptr;
+                    }
+                }
+            }
+        }
+
+
+    }
+
+
 }

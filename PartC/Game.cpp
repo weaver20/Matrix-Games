@@ -20,11 +20,11 @@ namespace mtm {
 
     void Game::addCharacter(const GridPoint &coordinates, std::shared_ptr<Character> character) {
 
-        if(game_mat(coordinates.row,coordinates.col) != nullptr) {
+        if(game_mat(coordinates) != nullptr) {
             throw CellOccupied();
         }
         else {
-            game_mat(coordinates.row,coordinates.col) = character;
+            game_mat(coordinates) = character;
         }
 
     }
@@ -55,7 +55,25 @@ namespace mtm {
     }
 
     void Game::attack(const GridPoint &src_coordinates, const GridPoint &dst_coordinates) {
+        // IlegalCell() may be thrown from operator() of PartCMatrix.
+        std::shared_ptr<Character> attacker = game_mat(src_coordinates);
+        std::shared_ptr<Character> victim =game_mat(dst_coordinates);
+        // no Character at src_coordinates
+        if (attacker == nullptr) {
+            throw CellEmpty();
+        }
+        if(!attacker->canAttackThere(src_coordinates, dst_coordinates)) {
+            throw OutOfRange();
+        }
 
+        AttackResult attack_res = attacker->attackVictim(game_mat(dst_coordinates));
+        // if nothing thrown - the attack was a success.
+        attacker->useAmmo();
+        if(attack_res == DEAD) {
+            victim = nullptr;
+        }
+
+        attacker->attackGrid(game_mat,dst_coordinates);
     }
 
     void Game::reload(const GridPoint &coordinates) {
@@ -73,36 +91,5 @@ namespace mtm {
 
 
 
-    const char *Game::IllegalArgument::what() const noexcept {
-        return exception::what();
-    }
-
-    const char *Game::IllegalCell::what() const noexcept {
-        return exception::what();
-    }
-
-    const char *Game::CellEmpty::what() const noexcept {
-        return exception::what();
-    }
-
-    const char *Game::MoveTooFar::what() const noexcept {
-        return exception::what();
-    }
-
-    const char *Game::CellOccupied::what() const noexcept {
-        return exception::what();
-    }
-
-    const char *Game::OutOfRange::what() const noexcept {
-        return exception::what();
-    }
-
-    const char *Game::OutOfAmmo::what() const noexcept {
-        return exception::what();
-    }
-
-    const char *Game::IllegalTarget::what() const noexcept {
-        return exception::what();
-    }
 
 }
