@@ -51,3 +51,7 @@ bool mtm::Character::isFriend(std::shared_ptr<Character> &other) {
 
 void
 mtm::Character::attackGrid(mtm::Matrix<std::shared_ptr<Character>> &game_mat, const mtm::GridPoint &dst_coordinates) {}
+
+mtm::Team mtm::Character::getTeam() const{
+    return kTeam;
+}

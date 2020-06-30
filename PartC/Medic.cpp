@@ -1,14 +1,16 @@
 #include "Medic.h"
+#define MEDIC_MOVE_RANGE 5
+#define MEDIC_RELOAD 5
 
 namespace mtm {
 
 
-    Medic::Medic(units_t health, units_t ammo, units_t attack_range, units_t power) {
-
-    }
+    Medic::Medic(Team team, units_t health, units_t ammo, units_t attack_range, units_t power) :
+            Character(team,health,ammo,attack_range,power,MEDIC_MOVE_RANGE,MEDIC_RELOAD)
+    {}
 
     Character *Medic::clone() const {
-        return nullptr;
+        return new Medic(*this);
     }
 
     bool Medic::canAttackThere(const GridPoint &source, const GridPoint &dest) const {

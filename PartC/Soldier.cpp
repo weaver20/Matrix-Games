@@ -1,16 +1,18 @@
 #include "Soldier.h"
 #define COLLATERAL_DAMAGE_RADIUS_FACTOR 3
 #define COLLATERAL_DAMAGE_POWER_FACTOR 2
+#define SOLDIER_MOVE_RANGE 3
+#define SOLDIER_RELOAD 3
 
 namespace mtm {
 
 
-    Soldier::Soldier(units_t health, units_t ammo, units_t attack_range, units_t power) {
-
-    }
+    Soldier::Soldier(Team team, units_t health, units_t ammo, units_t attack_range, units_t power) :
+            Character(team,health,ammo,attack_range,power,SOLDIER_MOVE_RANGE,SOLDIER_RELOAD)
+            {}
 
     Character *Soldier::clone() const {
-        return nullptr;
+        return new Soldier(*this);
     }
 
     bool Soldier::canAttackThere(const GridPoint &source, const GridPoint &dest) const {

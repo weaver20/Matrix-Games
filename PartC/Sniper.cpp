@@ -2,12 +2,17 @@
 #define SPECIAL_ATTACK_MOD 3
 #define SPECIAL_ATTACK_FACTOR 2
 #define MIN_RANGE_FACTOR 2
+#define SNIPER_MOVE_RANGE 4
+#define SNIPER_RELOAD 2
+#define INIT_ATTACK_COUNTER 0
 namespace mtm {
 
 
-    Sniper::Sniper(units_t health, units_t ammo, units_t attack_range, units_t power) {
-            // Dont Forget to set counter to 0.
-    }
+    Sniper::Sniper(Team team, units_t health, units_t ammo, units_t attack_range, units_t power) :
+    Character(team,health,ammo,attack_range,power,SNIPER_MOVE_RANGE,SNIPER_RELOAD),
+    attack_counter(INIT_ATTACK_COUNTER) {}
+
+
 
     Character *Sniper::clone() const {
         return new Sniper(*this);

@@ -24,8 +24,8 @@ namespace mtm {
         Character(Team team, units_t health, units_t ammo, units_t attack_range, units_t power, units_t move_range,
                   units_t reload_amount);
 
-        Character(Character&) = default;
-        Character& operator=(Character&) = delete ; // Can't change const values after init.
+        Character(const Character&) = default;
+        Character& operator=(const Character&) = delete ; // Can't change const values after init.
         ~Character() = default;
 
         bool isFriend(std::shared_ptr<Character>& other);
@@ -90,11 +90,27 @@ namespace mtm {
          *          false - otherwise.
          */
          virtual bool canAttackThere(const GridPoint &source, const GridPoint &dest) const = 0;
-
+        /**
+         * This function attacks another character according to attacker Character rules.
+         * @param victim - the Character to attack
+         * @return  DIED - if victim's HP <= 0 after the attack
+         *          STILL_ALIVE - otherwise.
+         */
         virtual AttackResult attackVictim(std::shared_ptr<Character> victim) = 0;
 
+        /**
+         * This function is responsible for collateral damage cause by an attack (by Soldier)
+         * if not overridden this function does nothing!
+         * @param game_mat
+         * @param dst_coordinates
+         */
         virtual void attackGrid(Matrix<std::shared_ptr<Character>>& game_mat,const GridPoint& dst_coordinates);
 
+        /**
+         * returns the team of the Character.
+         * @return
+         */
+        Team getTeam() const;
     };
 
 }

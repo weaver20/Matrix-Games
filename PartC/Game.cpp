@@ -77,7 +77,12 @@ namespace mtm {
     }
 
     void Game::reload(const GridPoint &coordinates) {
-
+        // this line may throw IllegalCell().
+        std::shared_ptr<Character> character = game_mat(coordinates);
+        if(character == nullptr) {
+            throw CellEmpty();
+        }
+        character->reload();
     }
 
     std::ostream &Game::printGameBoard(std::ostream &os, const char *begin, const char *end, unsigned int width) const {
@@ -85,6 +90,17 @@ namespace mtm {
     }
 
     bool Game::isOver(Team *winningTeam) const {
+        if(!any(game_mat)) {
+            return false;
+        }
+
+        bool still_alive_cpp = false;
+        bool still_alive_python = false;
+        for(Matrix<std::shared_ptr<Character>>::const_iterator c_it = game_mat.begin() ; c_it != game_mat.end() ; c_it++) {
+            if((*c_it)->getTeam() == CCP) {
+
+            }
+        }
 
     }
 
