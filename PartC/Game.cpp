@@ -2,21 +2,38 @@
 
 namespace mtm {
 
-    Game::Game(int height, int width) {
+    Game::Game(int height, int width): game_mat(Matrix<std::shared_ptr<Character>>(Dimensions(height, width))) {}
 
-    }
-
-    Game::Game(const Game &other) {
-
-    }
+    Game::Game(const Game &other): game_mat(copyGameBoard(other)) {}
 
     Game &Game::operator=(const Game &other) {
+        if(this == &other){
+            return *this;
+        }
+        Matrix<std::shared_ptr<Character>> src_mat = other.game_mat;
+        Matrix<std::shared_ptr<Character>>::iterator it2 = src_mat.begin();
+        Matrix<std::shared_ptr<Character>> target_mat(Dimensions(src_mat.height(), src_mat.width()));
+
+
 
     }
 
     Game::~Game() {
 
     }
+
+     Matrix<std::shared_ptr<Character>> Game::copyGameBoard(Game matrix){
+         Matrix<std::shared_ptr<Character>>& src_mat = matrix.game_mat;
+         Matrix<std::shared_ptr<Character>>::iterator it2 = src_mat.begin();
+         Matrix<std::shared_ptr<Character>> target_mat(Dimensions(src_mat.height(), src_mat.width()));
+         for(Matrix<std::shared_ptr<Character>>::iterator it1 = src_mat.begin(); it1 != src_mat.end(); it1++){
+             *it2 = std::shared_ptr<Character>((*it1)->clone());
+             it2++;
+         }
+         return target_mat;
+    }
+
+
 
     void Game::addCharacter(const GridPoint &coordinates, std::shared_ptr<Character> character) {
 
@@ -97,7 +114,7 @@ namespace mtm {
         bool still_alive_cpp = false;
         bool still_alive_python = false;
         for(Matrix<std::shared_ptr<Character>>::const_iterator c_it = game_mat.begin() ; c_it != game_mat.end() ; c_it++) {
-            if((*c_it)->getTeam() == CCP) {
+            if((*c_it)->getTeam() == CPP) {
 
             }
         }

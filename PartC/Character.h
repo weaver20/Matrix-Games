@@ -7,7 +7,7 @@
 
 namespace mtm {
 
-    enum AttackResult  {DEAD, STILL_ALLIVE};
+    enum AttackResult  {DEAD, STILL_ALIVE};
 
     class Character {
 

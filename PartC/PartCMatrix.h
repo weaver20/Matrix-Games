@@ -2,6 +2,7 @@
 #define EX3_MATRIX_H
 #include "Auxiliaries.h"
 #include <cstring>
+#include "Exceptions.h"
 
 // use to check and simplify implementation
 //typedef int T;

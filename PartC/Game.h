@@ -7,10 +7,12 @@
 #include "PartCMatrix.h"
 #include <Auxiliaries.h>
 #include <memory>
+#include <cassert>
 
 namespace mtm {
     class Game {
         Matrix<std::shared_ptr<Character>> game_mat;
+        static Matrix<std::shared_ptr<Character>> copyGameBoard(Game matrix);
 
     public:
         /**
