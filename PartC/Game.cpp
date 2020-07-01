@@ -96,10 +96,20 @@ namespace mtm {
 
         bool still_alive_cpp = false;
         bool still_alive_python = false;
-        for(Matrix<std::shared_ptr<Character>>::const_iterator c_it = game_mat.begin() ; c_it != game_mat.end() ; c_it++) {
-            if((*c_it)->getTeam() == CCP) {
+        for(const auto & c_it : game_mat) {
+
+            if(c_it->getTeam() == CPP) {
+                still_alive_cpp = true;
+            }
+            else if (c_it->getTeam() == PYTHON) {
+                still_alive_python = true;
+            }
+
+            if(still_alive_cpp and still_alive_python) {
+                return false;
 
             }
+
         }
 
     }
