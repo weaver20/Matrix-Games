@@ -28,6 +28,12 @@ namespace mtm {
         Character& operator=(const Character&) = delete ; // Can't change const values after init.
         ~Character() = default;
 
+        /**
+         * checks if another character is in my team or not
+         * @param other
+         * @return true - if other is in my team
+         *          false - otherwise.
+         */
         bool isFriend(std::shared_ptr<Character>& other);
 
         /**
@@ -71,7 +77,7 @@ namespace mtm {
         bool isDead() const;
 
         /**
-         *  gives the power of the attack
+         *  gives the power of the current attack (is different only at Sniper).
          * @return
          *      units_t power
          */

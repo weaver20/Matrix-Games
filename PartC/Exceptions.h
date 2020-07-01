@@ -7,6 +7,10 @@
 #include "Auxiliaries.h"
 
 namespace mtm {
+    /**
+     * This are all The Exceptions that can be thrown throughout the Game.
+     */
+
     class Exception : public std::exception {};
     
     class GameException : public mtm::Exception {

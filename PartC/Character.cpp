@@ -8,7 +8,7 @@ mtm::Character::Character(Team team, units_t health, units_t ammo, units_t attac
 inline void mtm::Character::reload() {
 ammo += kReloadAmount;
 }
-                    // TODO: what About this?
+
 void mtm::Character::useAmmo() {
     assert(ammo > 0);
     ammo--;
@@ -18,7 +18,7 @@ inline void mtm::Character::acceptMedicine(mtm::units_t med) {
     assert(med >= 0);
     health += med;
 }
-                    // TODO maybe do something in case of death? Exception: isDead() ??? maybe return enum {WasKilled, StillAllive}
+
 inline mtm::AttackResult mtm::Character::getHit(mtm::units_t hit) {
     assert(hit >= 0);
     health -= hit;
@@ -46,6 +46,7 @@ inline mtm::units_t mtm::Character::getMoveRange() const {
 }
 
 bool mtm::Character::isFriend(std::shared_ptr<Character> &other) {
+    assert(other != nullptr);
     return kTeam == other->kTeam;
 }
 
