@@ -1,5 +1,4 @@
 #include "Sniper.h"
-#define SPECIAL_ATTACK_MOD 3
 #define SPECIAL_ATTACK_FACTOR 2
 #define MIN_RANGE_FACTOR 2
 #define SNIPER_MOVE_RANGE 4
@@ -26,7 +25,7 @@ namespace mtm {
     }
 
     units_t Sniper::getPower() const {
-        return attack_counter == 0 ? kPower*SPECIAL_ATTACK_FACTOR : kPower;
+        return attack_counter % 3 == 0 and attack_counter > 0 ? kPower*SPECIAL_ATTACK_FACTOR : kPower;
     }
 
     AttackResult Sniper::attackVictim(std::shared_ptr<Character> victim) {
@@ -36,12 +35,12 @@ namespace mtm {
         if (victim == nullptr or isFriend(victim)) {
             throw IllegalTarget();
         }
-        AttackResult result = victim->getHit(getPower());
         attackSuccess();
+        AttackResult result = victim->getHit(getPower());
         return result;
     }
 
     void Sniper::attackSuccess() {
-        attack_counter = (attack_counter + 1)%SPECIAL_ATTACK_MOD;
+        attack_counter += 1;
     }
 }
