@@ -27,7 +27,7 @@ add_executable(PartC
         PartC/Auxiliaries.cpp
         PartC/Character.cpp
         PartC/Exceptions.cpp
-        partC/test_partC.cpp
+        PartC/partC_tester.cpp
         )
 # Adds compile flags to compilation command of the target hello.
 # first arg: name of the target

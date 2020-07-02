@@ -2,6 +2,7 @@
 #define EX3_MATRIX_H
 #include "Auxiliaries.h"
 #include <cstring>
+#include "Exceptions.h"
 
 // use to check and simplify implementation
 //typedef int T;
@@ -912,7 +913,7 @@ namespace mtm {
     }
 
     template<class T>
-    const T &Matrix<T>::operator()(int row_num, int col_num) const { // Noam
+    const T& Matrix<T>::operator()(int row_num, int col_num) const { // Noam
         if(row_num >= dimensions.getRow() or col_num >= dimensions.getCol() or row_num < 0 or col_num < 0){
             throw IllegalCell();
         }
@@ -921,7 +922,7 @@ namespace mtm {
     }
 
     template<class T>
-    T &Matrix<T>::operator()(const GridPoint &coordinates) {
+    T& Matrix<T>::operator()(const GridPoint &coordinates) {
         return operator()(coordinates.row,coordinates.col);
     }
 

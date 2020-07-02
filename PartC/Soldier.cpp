@@ -7,8 +7,8 @@
 namespace mtm {
 
 
-    Soldier::Soldier(Team team, units_t health, units_t ammo, units_t attack_range, units_t power) :
-            Character(team,health,ammo,attack_range,power,SOLDIER_MOVE_RANGE,SOLDIER_RELOAD)
+    Soldier::Soldier(CharacterType type, Team team, units_t health, units_t ammo, units_t attack_range, units_t power) :
+            Character(type, team,health,ammo,attack_range,power,SOLDIER_MOVE_RANGE,SOLDIER_RELOAD)
             {}
 
     Character *Soldier::clone() const {
@@ -29,7 +29,7 @@ namespace mtm {
         }
         // the attack is legal - but nothing to do.
         if(victim == nullptr or isFriend(victim)) {
-            return STILL_ALLIVE;
+            return STILL_ALIVE;
         }
         // victim is an Enemy! - Attacking:
         AttackResult result = victim->getHit(getPower());

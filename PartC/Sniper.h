@@ -9,7 +9,7 @@ namespace mtm {
         // This will keep track about when Sniper's Special attack occurs.
     unsigned int attack_counter;
     public:
-        Sniper(Team team, units_t health, units_t ammo, units_t attack_range, units_t power);
+        Sniper(CharacterType type, Team team, units_t health, units_t ammo, units_t attack_range, units_t power);
         Sniper(const Sniper&) = default;
         Sniper& operator=(const Sniper&) = delete ;
         ~Sniper() = default;

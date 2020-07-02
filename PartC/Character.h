@@ -7,11 +7,12 @@
 
 namespace mtm {
 
-    enum AttackResult  {DEAD, STILL_ALLIVE};
+    enum AttackResult  {DEAD, STILL_ALIVE};
 
     class Character {
 
     protected:
+        CharacterType type;
         const Team kTeam;
         units_t health;
         units_t ammo;
@@ -21,7 +22,7 @@ namespace mtm {
         const units_t kReloadAmount;
 
     public:
-        Character(Team team, units_t health, units_t ammo, units_t attack_range, units_t power, units_t move_range,
+        Character(CharacterType type, Team team, units_t health, units_t ammo, units_t attack_range, units_t power, units_t move_range,
                   units_t reload_amount);
 
         Character(const Character&) = default;
@@ -117,6 +118,15 @@ namespace mtm {
          * @return
          */
         Team getTeam() const;
+
+        /**
+         * returns the type of the Character.
+         * @return
+         */
+        CharacterType getType() const;
+
+
+
     };
 
 }

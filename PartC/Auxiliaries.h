@@ -21,7 +21,7 @@ namespace mtm {
 			return this->row == other.row && this->col == other.col;
 		}
 		
-		static int distance(const GridPoint& point1, const GridPoint& point2) {
+		static units_t distance(const GridPoint& point1, const GridPoint& point2) {
 			return 	std::abs(point1.row - point2.row) 
 					+ std::abs(point1.col - point2.col);
 		}
