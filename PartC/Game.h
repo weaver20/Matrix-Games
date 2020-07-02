@@ -1,16 +1,19 @@
 #ifndef EX3_GAME_H
 #define EX3_GAME_H
+#define DELIMETER " "
 #include "Soldier.h"
 #include "Medic.h"
 #include "Sniper.h"
 #include "Exceptions.h"
 #include "PartCMatrix.h"
-#include <Auxiliaries.h>
+#include "Auxiliaries.h"
 #include <memory>
+#include <cassert>
 
 namespace mtm {
     class Game {
-        Matrix<std::shared_ptr<Character>> game_mat;
+        Matrix <std::shared_ptr<Character>> game_mat;
+        static Matrix<std::shared_ptr<Character>> copyGameBoard(const Game& matrix);
 
     public:
         /**
@@ -45,7 +48,7 @@ namespace mtm {
         /**
          * Destructor - releases all memory allocated.
          */
-        ~Game();
+        ~Game() = default;
 
         /**
          *
@@ -117,8 +120,7 @@ namespace mtm {
          *  Exceptions:
          *          TODO: Maybe std::bad_alloc ?????
          */
-        std::ostream &printGameBoard(std::ostream &os, const char *begin,
-                                     const char *end, unsigned int width) const;
+         friend std::ostream& operator<<(std::ostream &os, const Game& game);
 
 
         /**
@@ -129,7 +131,7 @@ namespace mtm {
          *      true - if all the Characters on the board are from the same Team.
          *      false - if there arent any Characters on the board or there are Characters from both teams on the board.
          */
-        bool isOver(Team *winningTeam = NULL) const;
+        bool isOver(Team* winningTeam = NULL) const;
 
 
 

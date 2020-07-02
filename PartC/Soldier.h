@@ -7,12 +7,14 @@ namespace mtm {
 
 
     public:
-        Soldier(units_t health, units_t ammo, units_t attack_range, units_t power);
-        Soldier(Soldier&) = delete ;
+        Soldier(CharacterType type, Team team, units_t health, units_t ammo, units_t attack_range, units_t power);
+        Soldier(const Soldier&) = default;
+        Soldier& operator=(const Soldier&) = delete ;
 
         Character* clone() const override;
-        bool isInAttackRange(GridPoint& source, GridPoint& dest) const override;
-
+        bool canAttackThere(const GridPoint &source, const GridPoint &dest) const override;
+        AttackResult attackVictim(std::shared_ptr<Character> victim) override;
+        void attackGrid(Matrix<std::shared_ptr<Character>>& game_mat,const GridPoint& dst_coordinates) override ;
     };
 }
 

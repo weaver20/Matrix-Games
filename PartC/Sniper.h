@@ -8,12 +8,15 @@ namespace mtm {
     private:
     unsigned int attack_counter;
     public:
-        Sniper(units_t health, units_t ammo, units_t attack_range, units_t power);
+        Sniper(CharacterType type, Team team, units_t health, units_t ammo, units_t attack_range, units_t power);
+        Sniper(const Sniper&) = default;
+        Sniper& operator=(const Sniper&) = delete ;
         ~Sniper() = default;
         Character* clone() const override;
-        bool isInAttackRange(GridPoint& source, GridPoint& dest) const override;
+        bool canAttackThere(const GridPoint &source, const GridPoint &dest) const override;
         units_t getPower() const override;
-        void attackSuccess() override ;
+        void attackSuccess();
+        AttackResult attackVictim(std::shared_ptr<Character> victim) override;
     };
 }
 

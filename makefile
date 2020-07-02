@@ -2,19 +2,19 @@ C = g++
 EXEA = partAexe
 EXEB = partBexe
 EXEC = partCexe
-COMP_FLAG = -std=c++11  -Wall -pedantic-errors -Werror -g 
+COMP_FLAG = -std=c++11 -Wall -pedantic-errors -Werror -g
 DEBUG_FLAG = -DNDEBUG
 AUX_FLAG = ~mtm/public/1920b/ex3/Auxiliaries.cpp
 EX3_FLAG = -I ~mtm/public/1920b/ex3/
 
 $(EXEA):
-	$(CC) $(COMP_FLAG) $(DEBUG_FLAG) partA/*.cpp $(AUX_FLAG) -IpartA $(EX3_FLAG)  -o $(EXEA)
+	$(CC) $(COMP_FLAG) $(DEBUG_FLAG) PartA/*.cpp $(AUX_FLAG) -IPartA $(EX3_FLAG)  -o $(EXEA)
 
 $(EXEB):
-	$(CC) $(COMP_FLAG) $(DEBUG_FLAG) $(AUX_FLAG) -IpartB $(EX3_FLAG) partB/*.cpp -o $(EXEB)
+	$(CC) $(COMP_FLAG) $(DEBUG_FLAG) $(AUX_FLAG) -IPartB $(EX3_FLAG) PartB/*.cpp -o $(EXEB)
 
 $(EXEC):
-	$(CC) $(COMP_FLAG) $(DEBUG_FLAG) $(AUX_FLAG) -IpartC $(EX3_FLAG) partC/*.cpp -o $(EXEC)
+	$(CC) $(COMP_FLAG) $(DEBUG_FLAG) -IPartC $(EX3_FLAG) PartC/*.cpp -o $(EXEC)
 
 
 candra:

@@ -2,6 +2,7 @@
 #define EX3_MATRIX_H
 #include "Auxiliaries.h"
 #include <cstring>
+#include "Exceptions.h"
 
 // use to check and simplify implementation
 //typedef int T;
@@ -284,6 +285,12 @@ namespace mtm {
              *
             */
             iterator operator++();
+
+            /**
+             * returns GridPoint of the position of the iterator.
+             * @return
+             */
+            GridPoint getGridPoint();
         };
 
         /* ******************** const_iterator Class ******************** */
@@ -446,6 +453,12 @@ namespace mtm {
          */
         T& operator()(int row_num, int col_num);
         /**
+         * Added this function to simplify working with GridPoints
+         * @param coordinates
+         * @return
+         */
+        T& operator()(const GridPoint& coordinates);
+        /**
          * defining () operator for Matrix - Read Only
          * @return reference to cell (i,j)
          *
@@ -456,6 +469,12 @@ namespace mtm {
          * Exceptions:
          */
         const T& operator()( int row_num, int col_num) const;
+        /**
+         * Added this function to simplify working with GridPoints
+         * @param coordinates
+         * @return
+         */
+        const T& operator()( const GridPoint& coordinates) const;
 
         /**
          * creates a boolean Matrix and sets cells to:
@@ -623,6 +642,12 @@ namespace mtm {
     template<class T>
     bool Matrix<T>::iterator::isInMainDiagonal() const  {
         return row == col;
+    }
+
+
+    template<class T>
+    GridPoint Matrix<T>::iterator::getGridPoint() {
+        return GridPoint(row,col);
     }
     // Aviram
 
@@ -875,20 +900,31 @@ namespace mtm {
     template<class T>
     T &Matrix<T>::operator()(int row_num, int col_num) { // Noam
         if(row_num >= dimensions.getRow() or col_num >= dimensions.getCol() or row_num < 0 or col_num < 0){
-            throw AccessIllegalElement();
+            throw IllegalCell();
         }
 
         return matrix[row_num * dimensions.getCol() + col_num];
     }
 
     template<class T>
-    const T &Matrix<T>::operator()(int row_num, int col_num) const { // Noam
+    const T& Matrix<T>::operator()(int row_num, int col_num) const { // Noam
         if(row_num >= dimensions.getRow() or col_num >= dimensions.getCol() or row_num < 0 or col_num < 0){
-            throw AccessIllegalElement();
+            throw IllegalCell();
         }
 
         return matrix[row_num * dimensions.getCol() + col_num];
     }
+
+    template<class T>
+    T& Matrix<T>::operator()(const GridPoint &coordinates) {
+        return operator()(coordinates.row,coordinates.col);
+    }
+
+    template<class T>
+    const T &Matrix<T>::operator()(const GridPoint &coordinates) const {
+        return operator()(coordinates.row,coordinates.col);
+    }
+
 
     template<class T>
     Matrix<bool> Matrix<T>::operator==(const T &t) const { // Noam
@@ -911,6 +947,7 @@ namespace mtm {
         Matrix<T> temp(*this);
         return temp += t;
     }
+
 
     /**
        * Sum of a Matrix with a T Object (Matrix at right side)
