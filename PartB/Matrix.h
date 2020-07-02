@@ -188,7 +188,7 @@ namespace mtm {
          *      assume apply_func accepts T objects and implemented operator ().
          * Exceptions:
          *      std::bad_alloc() - if there`s an allocation problem
-         */ // TODO: FIX BACK TO CONST AND CONST_ITERATOR
+         */
         template<class Application>
         Matrix<T> apply(Application apply_func) const ;
 
@@ -261,29 +261,29 @@ namespace mtm {
             /**
            * defining operator * - Read & Write access to cell pointed by iterator
            * @return T& to cell
-           * TODO
+           *
            * assumptions of T class:
-           *
+           *        basic assumptions
            * Exceptions:
-           *
+           *         AccessIllegalElement - if iterator points to a cell that is not in the matrix.
            */
             T& operator*() const;
             /**
              * Increment Postfix operator
-             * TODO
+             *
              * assumptions of T class:
-             *
+             *      basic assumptions
              * Exceptions:
-             *
+             *      None.
              */
             const iterator operator++(int);
             /**
              * Increment Prefix operator
-             * TODO
+             *
              * assumptions of T class:
-             *
+             *      basic assumptions
              * Exceptions:
-             *
+             *      None.
             */
             iterator operator++();
         };
@@ -373,41 +373,42 @@ namespace mtm {
         /**
          * Matrix begin function
          * @return an iterator that points to the first cell (0,0)
-         * TODO
-         * assumptions of T class:
          *
+         * assumptions of T class:
+         *      basic assumptions
          * Exceptions:
+         *      None.
          */
         iterator begin();
         /**
          * const Matrix begin function
          * @return a const_iterator that points to the first cell (0,0)
          *
-         * TODO
          * assumptions of T class:
-         *
+         *      basic assumptions
          * Exceptions:
+         *      None.
          */
         const_iterator begin() const;
         /**
          * Matrix end function
          * @return an iterator that points to the last cell in the matrix
          *
-         * TODO
          * assumptions of T class:
-         *
+         *      basic assumptions
          * Exceptions:
+         *      None.
          */
         iterator end();
         /**
         * const Matrix end function
         * @return a const_iterator that points to the last cell in the matrix
          *
-         * TODO
          * assumptions of T class:
-         *
+         *      basic assumptions
          * Exceptions:
-        */
+         *      None.
+         */
         const_iterator end() const;
         /**
          * a static function that creates a matrix of the size of dim x dim
@@ -415,10 +416,12 @@ namespace mtm {
          * and initialize main Diagonal cells to init_value.
          * @return a new Matrix accordingly
          *
-         * TODO
+         *
          * assumptions of T class:
          *      basic assumptions
          * Exceptions:
+         *      IllegalInitialization - if dim is not a positive number.
+         *      std::bad_alloc - in case of an allocation problem.
          */
         static Matrix<T> Diagonal(int dim, const T& init_value);
 
@@ -440,22 +443,23 @@ namespace mtm {
          * defining () operator for Matrix - Read & Write
          * @return reference to cell (i,j)
          *
-         * TODO
+         *
          * assumptions of T class:
          *      basic assumptions
          * Exceptions:
-         *
+         *      AccessIllegalElement - if cell (i,j) is not in the matrix.
          */
         T& operator()(int row_num, int col_num);
         /**
          * defining () operator for Matrix - Read Only
          * @return reference to cell (i,j)
          *
-         * TODO
+         *
          * assumptions of T class:
          *      basic assumptions
          *
          * Exceptions:
+         *      AccessIllegalElement - if cell (i,j) is not in the matrix.
          */
         const T& operator()( int row_num, int col_num) const;
 
@@ -465,11 +469,11 @@ namespace mtm {
          *      false - otherwise
          * @param t
          * @return the created boolean Matrix
-         *
-         * TODO
          * assumptions of T class:
+         *      basic assumptions.
          *      operator ==
          * Exceptions:
+         *      std::bad_alloc - in case of an allocation problem.
          *
          */
         Matrix<bool> operator==(const T& t) const;
@@ -481,11 +485,11 @@ namespace mtm {
          * @param t
          * @return the created boolean Matrix
          *
-         * TODO
          * assumptions of T class:
+         *      basic assumptions.
          *      operator ==
-         *
          * Exceptions:
+         *      std::bad_alloc - in case of an allocation problem.
          *
          */
         Matrix<bool> operator!=(const T& t) const;
@@ -634,10 +638,12 @@ namespace mtm {
       * @param os
       * @return
       *
-      * TODO
-      * assumptions of T class:
       *
+      * assumptions of T class:
+      *     basic assumptions
+      *     operator <<
       * Exceptions:
+      *     None.
       */
     template<class T>
     std::ostream &operator<<(std::ostream &os, const Matrix<T> &to_print) { // Noam
@@ -937,20 +943,20 @@ namespace mtm {
      * true - if the boolean values of the cells are all true.
      * false - otherwise.
      *
-     * TODO
      * assumptions of T class:
-     *
+     *      basic assumptions.
+     *      boolean conversion.
      * Exceptions:
-     *
+     *      None.
      */
     template<class T>
     bool all(const Matrix<T>& matrix) {
         for (typename Matrix<T>::const_iterator it = matrix.begin(); it != matrix.end(); it++) {
-            // one of the cells is 0
-            if (bool(*it) == false) {
+            // one of the cells's boolean value is false
+            if (!bool(*it)) {
                 return false;
             }
-            // result will stay true if no cell is 0
+            // result will stay true if no cell's boolean value is false.
         }
         return true;
     }
@@ -962,22 +968,21 @@ namespace mtm {
      * true - if at least one boolean value of one of the cells are true.
      * false - otherwise.
      *
-     * TODO
      * assumptions of T class:
-     *
-     *
+     *      basic assumptions.
+     *      boolean conversion.
      * Exceptions:
-     *
+     *      None.
      */
     template<class T>
     bool any(const Matrix<T>& matrix) { // Noam
         for (typename Matrix<T>::const_iterator it = matrix.begin(); it != matrix.end(); it++) {
-            // if one of the cells is 0 - return true and end.
-            if (bool(*it) == true) {
+            // if one of the cells's boolean value is true.
+            if (bool(*it)) {
                 return true;
             }
         }
-        // if no cell is 0
+        // if all cells's boolean value is false.
         return false;
     }
 

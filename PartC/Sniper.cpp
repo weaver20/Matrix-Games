@@ -29,10 +29,6 @@ namespace mtm {
         return attack_counter == 0 ? kPower*SPECIAL_ATTACK_FACTOR : kPower;
     }
 
-    void Sniper::attackSuccess() {
-        attack_counter = (attack_counter + 1)%SPECIAL_ATTACK_MOD;
-    }
-
     AttackResult Sniper::attackVictim(std::shared_ptr<Character> victim) {
         if(isOutOfAmmo()) {
             throw OutOfAmmo();
@@ -43,5 +39,9 @@ namespace mtm {
         AttackResult result = victim->getHit(getPower());
         attackSuccess();
         return result;
+    }
+
+    void Sniper::attackSuccess() {
+        attack_counter = (attack_counter + 1)%SPECIAL_ATTACK_MOD;
     }
 }

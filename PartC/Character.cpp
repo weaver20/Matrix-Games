@@ -1,6 +1,5 @@
 #include "Character.h"
 #include <cassert>
-
 namespace mtm {
 
     mtm::Character::Character(CharacterType type, Team team, units_t health, units_t ammo, units_t attack_range,
@@ -9,7 +8,7 @@ namespace mtm {
             type(type), kTeam(team), health(health), ammo(ammo), kAttackRange(attack_range), kPower(power),
             kMovementRange(move_range), kReloadAmount(reload_amount) {}
 
-    void mtm::Character::reload() {
+    inline void mtm::Character::reload() {
         ammo += kReloadAmount;
     }
 
@@ -23,13 +22,12 @@ namespace mtm {
         ammo--;
     }
 
-    void mtm::Character::acceptMedicine(mtm::units_t med) {
+    inline void mtm::Character::acceptMedicine(mtm::units_t med) {
         assert(med >= 0);
         health += med;
     }
 
-    // TODO maybe do something in case of death? Exception: isDead() ??? maybe return enum {WasKilled, StillAllive}
-    mtm::AttackResult mtm::Character::getHit(mtm::units_t hit) {
+    inline mtm::AttackResult mtm::Character::getHit(mtm::units_t hit) {
         assert(hit >= 0);
         health -= hit;
         if (health <= 0) {
@@ -39,7 +37,7 @@ namespace mtm {
         return STILL_ALIVE;
     }
 
-    bool mtm::Character::isOutOfAmmo() const {
+    inline bool mtm::Character::isOutOfAmmo() const {
         return ammo == 0;
     }
 
@@ -51,11 +49,12 @@ namespace mtm {
         return kPower;
     }
 
-    mtm::units_t mtm::Character::getMoveRange() const {
+    inline mtm::units_t mtm::Character::getMoveRange() const {
         return kMovementRange;
     }
 
     bool mtm::Character::isFriend(std::shared_ptr<Character> &other) {
+        assert(other != nullptr);
         return kTeam == other->kTeam;
     }
 

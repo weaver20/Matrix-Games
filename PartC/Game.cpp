@@ -137,12 +137,22 @@ namespace mtm {
         bool still_alive_cpp = false;
         bool still_alive_python = false;
 
-        for(Matrix<std::shared_ptr<Character>>::const_iterator it = game_mat.begin(); it != game_mat.end(); it++) {
-            std::shared_ptr<Character> character = *it;
-            if(character != nullptr){
-                still_alive_cpp = still_alive_cpp and character->getTeam() == CPP;
-                still_alive_python = still_alive_python and character->getTeam() == PYTHON;
+        for(const auto & c_it : game_mat) {
+            if(c_it == nullptr) {
+                continue;
+                }
+            if(c_it->getTeam() == CPP) {
+                still_alive_cpp = true;
             }
+            else if (c_it->getTeam() == PYTHON) {
+                still_alive_python = true;
+            }
+
+            if(still_alive_cpp and still_alive_python) {
+                return false;
+
+            }
+
         }
 
         if(still_alive_python == still_alive_cpp){
