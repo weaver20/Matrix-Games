@@ -8,7 +8,7 @@ namespace mtm {
             type(type), kTeam(team), health(health), ammo(ammo), kAttackRange(attack_range), kPower(power),
             kMovementRange(move_range), kReloadAmount(reload_amount) {}
 
-    inline void mtm::Character::reload() {
+     void mtm::Character::reload() {
         ammo += kReloadAmount;
     }
 
@@ -22,12 +22,12 @@ namespace mtm {
         ammo--;
     }
 
-    inline void mtm::Character::acceptMedicine(mtm::units_t med) {
+    void mtm::Character::acceptMedicine(mtm::units_t med) {
         assert(med >= 0);
         health += med;
     }
 
-    inline mtm::AttackResult mtm::Character::getHit(mtm::units_t hit) {
+    mtm::AttackResult mtm::Character::getHit(mtm::units_t hit) {
         assert(hit >= 0);
         health -= hit;
         if (health <= 0) {
@@ -37,19 +37,19 @@ namespace mtm {
         return STILL_ALIVE;
     }
 
-    inline bool mtm::Character::isOutOfAmmo() const {
+     bool mtm::Character::isOutOfAmmo() const {
         return ammo == 0;
     }
 
-    inline bool mtm::Character::isDead() const {
+     bool mtm::Character::isDead() const {
         return health == 0;
     }
 
-    inline mtm::units_t mtm::Character::getPower() const {
+     mtm::units_t mtm::Character::getPower() const {
         return kPower;
     }
 
-    inline mtm::units_t mtm::Character::getMoveRange() const {
+     mtm::units_t mtm::Character::getMoveRange() const {
         return kMovementRange;
     }
 
