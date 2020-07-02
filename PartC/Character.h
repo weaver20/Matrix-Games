@@ -125,6 +125,14 @@ namespace mtm {
          */
         CharacterType getType() const;
 
+        /**
+         * Checks if the attacking Character can attack the victim's position - according to Character's attack rules.
+         * @param attacker
+         * @param victim
+         * @return
+         */
+         virtual bool checkValidVictimPos(const GridPoint &attacker, const GridPoint &victim);
+
 
 
     };

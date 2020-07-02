@@ -15,6 +15,7 @@ namespace mtm {
         bool canAttackThere(const GridPoint &source, const GridPoint &dest) const override;
         AttackResult attackVictim(std::shared_ptr<Character> victim) override;
         void attackGrid(Matrix<std::shared_ptr<Character>>& game_mat,const GridPoint& dst_coordinates) override ;
+        bool checkValidVictimPos(const GridPoint &attacker, const GridPoint &victim) override ;
     };
 }
 

@@ -18,8 +18,7 @@ namespace mtm {
     bool Soldier::canAttackThere(const GridPoint &source, const GridPoint &dest) const {
         // one of values (row/col) must be equalls at source and at dest
         // distance must be inside attack range.
-        return (source.row == dest.row or source.col == dest.col) and
-               GridPoint::distance(source,dest) <= kAttackRange;
+        return GridPoint::distance(source,dest) <= kAttackRange;
     }
 
     AttackResult Soldier::attackVictim(std::shared_ptr<Character> victim) {
@@ -27,6 +26,7 @@ namespace mtm {
         if(isOutOfAmmo()) {
             throw OutOfAmmo();
         }
+
         // the attack is legal - but nothing to do.
         if(victim == nullptr or isFriend(victim)) {
             return STILL_ALIVE;
@@ -59,6 +59,10 @@ namespace mtm {
         }
 
 
+    }
+
+    bool Soldier::checkValidVictimPos(const GridPoint &attacker, const GridPoint &victim) {
+        return attacker.row == victim.row or attacker.col == victim.col;
     }
 
 

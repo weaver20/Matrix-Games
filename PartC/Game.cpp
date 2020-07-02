@@ -90,7 +90,9 @@ namespace mtm {
         if(!attacker->canAttackThere(src_coordinates, dst_coordinates)) {
             throw OutOfRange();
         }
-
+        if(! attacker->checkValidVictimPos(src_coordinates,dst_coordinates)) {
+            throw IllegalTarget();
+        }
         AttackResult attack_res = attacker->attackVictim(game_mat(dst_coordinates));
         // if nothing thrown - the attack was a success.
         attacker->useAmmo();
@@ -117,14 +119,14 @@ namespace mtm {
             if(character == nullptr){
                 str_ptr += DELIMETER;
             }
-            else if(character->clone()->getType() == MEDIC){
+            else if(character->getType() == MEDIC){
                 str_ptr += character->getTeam() == CPP ? "M" : "m";
             }
-            else if(character->clone()->getType() == SOLDIER){
-                str_ptr += character->getTeam() == CPP ? "M" : "m";
+            else if(character->getType() == SOLDIER){
+                str_ptr += character->getTeam() == CPP ? "S" : "s";
             }
-            else if(character->clone()->getType() == SNIPER){
-                str_ptr += character->getTeam() == CPP ? "M" : "m";
+            else if(character->getType() == SNIPER){
+                str_ptr += character->getTeam() == CPP ? "N" : "n";
             }
         }
         return printGameBoard(os, &str_ptr[0], &str_ptr[0] + str_ptr.length(), game.game_mat.width());

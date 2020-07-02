@@ -65,4 +65,8 @@ namespace mtm {
     mtm::Team mtm::Character::getTeam() const {
         return kTeam;
     }
+
+    bool Character::checkValidVictimPos(const GridPoint &attacker, const GridPoint &victim) {
+        return true;
+    }
 }

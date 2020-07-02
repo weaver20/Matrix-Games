@@ -14,12 +14,11 @@ namespace mtm {
     }
 
     bool Medic::canAttackThere(const GridPoint &source, const GridPoint &dest) const {
-        // Medic cant Attack it self.
-        // Must be inside attack range.
-        return GridPoint::distance(source,dest) >= 0 and GridPoint::distance(source,dest) <= kAttackRange;
+        return  GridPoint::distance(source,dest) <= kAttackRange;
     }
 
     AttackResult Medic::attackVictim(std::shared_ptr<Character> victim) {
+        // attacking an empty cell or Medic attacking himself.
         if (victim == nullptr) {
             throw IllegalTarget();
         }
@@ -34,5 +33,9 @@ namespace mtm {
         }
         AttackResult result = victim->getHit(getPower());
         return result;
+    }
+
+    bool Medic::checkValidVictimPos(const GridPoint &attacker, const GridPoint &victim) {
+        return !(attacker == victim);
     }
 }

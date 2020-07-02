@@ -12,6 +12,7 @@ namespace mtm {
         Character* clone() const override;
         bool canAttackThere(const GridPoint &source, const GridPoint &dest) const override;
         AttackResult attackVictim(std::shared_ptr<Character> victim) override;
+        bool checkValidVictimPos(const GridPoint &attacker, const GridPoint &victim) override ;
     };
 }
 

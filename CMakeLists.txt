@@ -17,7 +17,7 @@ add_executable(PartB
         PartB/Auxiliaries.cpp
         PartB/Auxiliaries.h
         PartB/Matrix.h
-        PartB/partB_tester.cpp )
+        PartB/test_partB.cpp)
 
 add_executable(PartC
         PartC/Soldier.cpp
