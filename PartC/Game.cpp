@@ -95,7 +95,7 @@ namespace mtm {
         // if nothing thrown - the attack was a success.
         attacker->useAmmo();
         if(attack_res == DEAD) {
-            victim = nullptr;
+            game_mat(dst_coordinates) = nullptr;
         }
 
         attacker->attackGrid(game_mat,dst_coordinates);

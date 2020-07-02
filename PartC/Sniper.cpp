@@ -19,10 +19,10 @@ namespace mtm {
     }
 
     bool Sniper::canAttackThere(const GridPoint &source, const GridPoint &dest) const {
-        units_t min_range = kAttackRange / MIN_RANGE_FACTOR;
+        units_t min_range = ceil(double(kAttackRange) / double(MIN_RANGE_FACTOR));
         // distance to target must be at least min_range
         // distance to target must be at most kAttackRange.
-        return GridPoint::distance(source,dest) >= min_range and GridPoint::distance(source,dest) <= kAttackRange;
+        return (GridPoint::distance(source,dest) >= min_range) and (GridPoint::distance(source,dest) <= kAttackRange);
     }
 
     units_t Sniper::getPower() const {

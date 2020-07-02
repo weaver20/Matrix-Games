@@ -479,7 +479,6 @@ bool testAttackSniper(){
             }
         }
     }
-
     game = Game(rows,cols);
     ASSERT_NO_ERROR(game.addCharacter(GridPoint(5,5), Game::makeCharacter(SNIPER, CPP, 1, 0, 3, 1)));
 

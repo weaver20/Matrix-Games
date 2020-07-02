@@ -38,15 +38,18 @@ namespace mtm {
 
     void Soldier::attackGrid(Matrix<std::shared_ptr<Character>> &game_mat, const GridPoint &dst_coordinates) {
 
+        units_t collateral_range = ceil(double(kAttackRange) / double(COLLATERAL_DAMAGE_RADIUS_FACTOR));
+        units_t collateral_power  = ceil(double(getPower()) / double(COLLATERAL_DAMAGE_POWER_FACTOR));
         for(Matrix<std::shared_ptr<Character>>::iterator it= game_mat.begin() ; it != game_mat.end() ; it++) {
 
+
             // Character is in Secondary Attack Range
-            if(GridPoint::distance(dst_coordinates,it.getGridPoint()) <= kAttackRange/COLLATERAL_DAMAGE_RADIUS_FACTOR ) {
+            if(GridPoint::distance(dst_coordinates,it.getGridPoint()) <= collateral_range ) {
                 // Character is an Enemy!
                 if(*it != nullptr and !isFriend(*it)) {
 
                     // Attacking!
-                    AttackResult res = (*it)->getHit(getPower()/COLLATERAL_DAMAGE_POWER_FACTOR);
+                    AttackResult res = (*it)->getHit(collateral_power);
                     // if Enemy is dead - remove corpse.
                     if (res == DEAD) {
                         *it = nullptr;
