@@ -82,7 +82,7 @@ namespace mtm {
          * @param src_coordinates
          * @param dst_coordinates
          * Exceptions:
-         *      IllegalCell - if src_coordinates or dst_coordinates are not on the gameboard / invalid.
+         *      IllegalCell - if src_coordinates or dst_coordinates are not on the game board / invalid.
          *      CellEmpty - if there is no Character at src_coordinates.
          *      MoveTooFar - if dst_coordinates is out of Characters's movement range.
          *      CellOccupied - if dst_coordinates is already occupied.
@@ -129,7 +129,7 @@ namespace mtm {
          * @param winningTeam
          * @return
          *      true - if all the Characters on the board are from the same Team.
-         *      false - if there arent any Characters on the board or there are Characters from both teams on the board.
+         *      false - if there aren't any Characters on the board or there are Characters from both teams on the board.
          */
         bool isOver(Team* winningTeam = NULL) const;
 

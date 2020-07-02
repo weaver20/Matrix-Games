@@ -10,7 +10,7 @@ add_executable(PartA
         PartA/Auxiliaries.h
         PartA/IntMatrix.cpp
         PartA/IntMatrix.h
-        PartA/partA_tester.cpp)
+        PartA/test_partA.cpp)
 
 
 add_executable(PartB
