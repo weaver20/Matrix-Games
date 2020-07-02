@@ -8,8 +8,8 @@
 namespace mtm {
 
 
-    Sniper::Sniper(Team team, units_t health, units_t ammo, units_t attack_range, units_t power) :
-    Character(team,health,ammo,attack_range,power,SNIPER_MOVE_RANGE,SNIPER_RELOAD),
+    Sniper::Sniper(CharacterType type, Team team, units_t health, units_t ammo, units_t attack_range, units_t power) :
+    Character(type, team,health,ammo,attack_range,power,SNIPER_MOVE_RANGE,SNIPER_RELOAD),
     attack_counter(INIT_ATTACK_COUNTER) {}
 
 
@@ -26,11 +26,11 @@ namespace mtm {
     }
 
     units_t Sniper::getPower() const {
-        attack_counter == 0 ? kPower*SPECIAL_ATTACK_FACTOR : kPower;
+        return attack_counter == 0 ? kPower*SPECIAL_ATTACK_FACTOR : kPower;
     }
 
     void Sniper::attackSuccess() {
-        attack_counter = ++attack_counter%SPECIAL_ATTACK_MOD;
+        attack_counter = (attack_counter + 1)%SPECIAL_ATTACK_MOD;
     }
 
     AttackResult Sniper::attackVictim(std::shared_ptr<Character> victim) {
