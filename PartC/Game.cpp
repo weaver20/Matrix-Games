@@ -20,8 +20,8 @@ namespace mtm {
      Matrix<std::shared_ptr<Character>> Game::copyGameBoard(const Game& matrix){
          Matrix<std::shared_ptr<Character>>::const_iterator it2 = matrix.game_mat.begin();
          Matrix<std::shared_ptr<Character>> target_mat(Dimensions(matrix.game_mat.height(), matrix.game_mat.width()));
-         for(Matrix<std::shared_ptr<Character>>::iterator it1 = target_mat.begin(); it1 != target_mat.end(); it1++, it2++){
-             if(*it1 != nullptr) {
+         for(Matrix<std::shared_ptr<Character>>::iterator it1 = target_mat.begin(); it1 != target_mat.end(); it1++, it2++) {
+             if (*it2 != nullptr) {
                  *it1 = std::shared_ptr<Character>((*it2)->clone());
              }
          }
@@ -68,6 +68,9 @@ namespace mtm {
         }
         if(src_ptr->getMoveRange() < GridPoint::distance(src_coordinates, dst_coordinates)){
             throw MoveTooFar();
+        }
+        if(src_ptr == dst_ptr){
+            throw GameException();
         }
         if(dst_ptr != nullptr){
             throw CellOccupied();

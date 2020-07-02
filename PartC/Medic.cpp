@@ -16,7 +16,7 @@ namespace mtm {
     bool Medic::canAttackThere(const GridPoint &source, const GridPoint &dest) const {
         // Medic cant Attack it self.
         // Must be inside attack range.
-        return GridPoint::distance(source,dest) > 0 and GridPoint::distance(source,dest) <= kAttackRange;
+        return GridPoint::distance(source,dest) >= 0 and GridPoint::distance(source,dest) <= kAttackRange;
     }
 
     AttackResult Medic::attackVictim(std::shared_ptr<Character> victim) {
